@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"><!--уточнить что это-->
+  <title>News Bord</title>
+  <link rel="stylesheet" href="./normalize.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="page">
+      <header class="header header__logout">
+        <h1 class="header__logo">NewsBord</h1>
+        <nav class="nav">
+          <ul class="nav__items">
+            <li class="nav__item"><a class="nav__link" >Главная</a></li>
+            <li class="nav__item"><button class="button button__auth">Авторизоваться</button></li>
+          </ul>
+        </nav>
+      </header>
+      <header class="header header__login">
+        <h1 class="header__logo header__logo_login">NewsBord</h1>
+        <nav class="nav">
+          <ul class="nav__items">
+            <li class="nav__item nav__item_login"><a class="nav__link nav__link_login">Главная</a></li>
+            <li class="nav__item nav__item_login"><a class="nav__link nav__link_login">Сохраненные статьи</a></li>
+            <li class="nav__item nav__item_login"><button class="button button__auth button__auth_login"><p class="login__user">Грета</p><img class="icon__logout" src="./images/Union.svg" alt="icon logout"></button></li>
+          </ul>
+        </nav>
+      </header>
+      <form class="search__form">
+        <input type="text" name="search" class="search-field" placeholder="Текст" required="" minlength="" maxlength="">
+        <button type="submit" name='input' class="button button__search">Искать</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+

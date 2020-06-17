@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"><!--уточнить что это-->
+  <title>NewsBord</title>
+  <link rel="stylesheet" href="./normalize.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="page">
+      <section class="top">
+        <!-- <header class="header header__logout">
+          <h1 class="header__logo">NewsBord</h1>
+          <nav class="nav">
+            <ul class="nav__items">
+              <li class="nav__item"><a class="nav__link" >Главная</a></li>
+              <li class="nav__item"><button class="button button__auth">Авторизоваться</button></li>
+            </ul>
+          </nav>
+        </header> -->
+        <header class="header header__login">
+          <h1 class="header__logo">NewsBord</h1>
+          <nav class="nav">
+            <ul class="nav__items">
+              <li class="nav__item nav__item_login"><a class="nav__link nav__link_login">Главная</a></li>
+              <li class="nav__item nav__item_login"><a class="nav__link nav__link_login">Сохраненные статьи</a></li>
+              <li class="nav__item nav__item_login"><button class="button button__auth button__auth_login"><p class="login__user">Грета</p><img class="icon__logout" src="./images/logout.svg" alt="icon logout"></button></li>
+            </ul>
+          </nav>
+        </header>
+        <div class="description">
+          <h2 class="description__title">Что в мире творится?</h2>
+          <p class="description__text">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</p>
+        </div>
+        <form class="search__form">
+          <input type="text" name="search" class="search-field" placeholder="Текст" required="" minlength="" maxlength="">
+          <button type="submit" name='input' class="button button__active button__active_search">Искать</button>
+        </form>
+    </section>
+    <section class="search__results">
+    <!-- <section class="search__results search__results_disactive"> -->
+      <div class="loading loading__disactive">
+        <i class="circle-preloader"></i>
+        <p class="loading__text">Идет поиск новостей...</p>
+      </div>
+      <div class="loading loading__nothing">
+        <i class="circle-preloader"></i>
+        <h4 class="loading__title">Ничего не найдено</h4>
+        <p class="loading__text">К сожалению по вашему запросу ничего не найдено.</p>
+      </div>
+    </section>
+    <section class="about">
+      <img class="autor__img" src="./images/image-03.png">
+      <div class="description description__about">
+        <h2 class="description__title description__title_about">Об авторе</h2>
+        <p class="description__text description__text_about">Это блок с описанием автора проекта. Здесь следует указать, как вас зовут, чем вы занимаетесь, какими технологиями разработки владеете.</p>
+        <p class="description__text description__text_about">Также можно рассказать о процессе обучения в Практикуме, чему вы тут научились, и чем можете помочь потенциальным заказчикам.</p>
+      </div>
+    </section>
+    <section class="popup popup__singup">
+      <div class="popup__content">
+        <img class="popup__close" src="./images/close.svg">
+        <h3 class="popup__title">Регистрация</h3>
+        <form class="popup__form" name="singup">
+          <div class="input">
+            <label class="popup__field">
+              Email
+              <input type="email" name="email" class="popup__input" placeholder="Введите почту" required>
+            </label>
+          </div>
+          <div class="popup__input-error"></div>
+          <div class="input">
+            <label class="popup__field">
+              Пароль
+              <input type="password" name="password" class="popup__input" placeholder="Введите пароль" required minlength='8'>
+            </label>
+          </div>
+          <div class="popup__input-error"></div>
+          <div class="input">
+            <label class="popup__field">
+              Имя
+              <input type="text" name="link" class="popup__input" placeholder="Введите своё имя" required minlength='2' maxlength='30'>
+            </label>
+          </div>
+          <div class="popup__input-error"></div>
+          <button type="submit" class="button button__active button__active_popup button__disabled" disabled>Зарегистрироваться</button>
+        </form>
+        <button type="button" class="login__option">
+          <span class="span__button">или </span>
+          Войти
+        </button>
+      </div>
+    </section>
+    <section class="popup popup__singin">
+      <div class="popup__content">
+        <img class="popup__close" src="./images/close.svg">
+        <h3 class="popup__title">Вход</h3>
+        <form class="popup__form" name="singin">
+          <div class="input">
+            <label class="popup__field">
+              Email
+              <input type="email" name="email" class="popup__input" placeholder="Введите почту" required>
+            </label>
+          </div>
+          <div class="popup__input-error"></div>
+          <div class="input">
+            <label class="popup__field">
+              Пароль
+              <input type="password" name="password" class="popup__input" placeholder="Введите пароль" required minlength='8'>
+            </label>
+          </div>
+          <div class="popup__input-error"></div>
+          <button type="submit" class="button button__active button__active_popup button__disabled" disabled>Войти</button>
+        </form>
+        <button type="button" class="login__option">
+          <span class="span__button">или </span>
+          Зарегистрироваться
+        </button>
+      </div>
+    </section>
+    <footer class="footer">
+      <p class="footer__copyright">&#169; 2020 Supersite, Powder by News API</p>
+      <div class="footer__links">
+        <p class="link__text"><a class="nav__link nav__link_footer">Главная</a></p>
+        <p class="link__text"><a class="nav__link nav__link_footer">Яндекс.Практикум</a></p>
+        <a class="social__link"><img class="social" src="./images/Vector1.svg"></a>
+        <a class="social__link"><img class="social" src="./images/Vector.svg"></a>
+      </div>
+    </footer>
+    </div>
+  </div>
+</body>
+</html>
+
