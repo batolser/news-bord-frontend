@@ -1,0 +1,42 @@
+@import url(./__field/search__field.css);
+.search {
+  display: flex;
+  justify-content: space-between;
+  width: 608px;
+  height: 64px;
+  background: #FFFFFF;
+  margin: 0 auto;
+  border-radius: 100px;
+  box-sizing: border-box;
+
+}
+
+@media screen and (min-width: 715px) and (max-width: 1023px) {
+
+  .search {
+  width: 448px;
+  height: 56px;
+}
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+
+  .search {
+    flex-direction: column;
+    background: none;
+    height: auto;
+    width: 100%;
+}
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+  .search {
+    flex-direction: column;
+    background: none;
+    height: auto;
+    width: 100%;
+}
+}
+
+

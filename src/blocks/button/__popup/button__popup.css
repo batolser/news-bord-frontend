@@ -1,0 +1,25 @@
+.button.button__popup {
+  width: 360px;
+  margin: 0 auto;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  height: 64px;
+  background: #E6E8EB;
+  color: #B6BCBF;
+  box-shadow: none;
+  border: none;
+}
+
+
+.button.button__popup:focus {
+  outline: none;
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+  .button.button__popup {
+  width: 100%;
+}
+
+}
+
+

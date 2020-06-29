@@ -1,0 +1,51 @@
+
+.footer__social {
+  cursor: pointer;
+  width: 24px;
+  transition: opacity .15s linear .15s;
+}
+
+.footer__social:hover {
+  opacity: 0.7;
+}
+
+.footer__social:active {
+  opacity: 0.9;
+}
+
+.footer__social:nth-of-type(1) {
+  margin-right: 24px;
+  margin-left: 40px;
+
+}
+
+
+@media screen and (min-width: 715px) and (max-width: 1023px) {
+
+.footer__social:nth-of-type(1) {
+  margin-left: 24px;
+}
+}
+
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+
+.footer__social {
+  margin-top: 11px;
+}
+
+.footer__social:nth-of-type(1) {
+  margin-left: 16px;
+}
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+.footer__social {
+  margin-top: 11px;
+}
+
+.footer__social:nth-of-type(1) {
+  margin-left: 16px;
+}
+}

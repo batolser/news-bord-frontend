@@ -1,0 +1,51 @@
+@import url(./__img/card__img.css);
+@import url(./__top/card__top.css);
+@import url(./__tag/card__tag.css);
+@import url(./__icon/card__icon.css);
+@import url(./__description/card__description.css);
+@import url(./__date/card__date.css);
+@import url(./__title/card__title.css);
+@import url(./__text/card__text.css);
+@import url(./__source/card__source.css);
+@import url(./__fix/card__fix.css);
+@import url(./__keyword/card__keyword.css);
+
+.card {
+  background: #FFFFFF;
+border-radius: 16px;
+color: #1A1B22;
+height: 576px;
+position: relative;
+text-decoration: none;
+transition: box-shadow .15s linear .15s;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+@media screen and (min-width: 715px) and (max-width: 1023px) {
+
+  .card {
+    height: auto;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+  .card {
+  height: auto;
+}
+}
+
+@media screen and (min-width: 331px) and (max-width: 375px) {
+  .card {
+    max-height: initial;
+    height: auto;
+}
+}
+
+@media screen and (min-width: 320px) and (max-width: 330px) {
+  .card {
+  max-height: 444px;
+}
+}

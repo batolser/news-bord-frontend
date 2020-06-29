@@ -1,0 +1,25 @@
+@import url(./_light-theme/header__active_light-theme.css);
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+  .header.header__active {
+  position: fixed;
+    width: 100%;
+  flex-direction: column;
+  background: #1A1B22;
+  box-shadow: none;
+  z-index: 101;
+  border-radius: 0 0 16px 16px;
+}
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+  .header.header__active {
+  position: fixed;
+    width: 100%;
+  flex-direction: column;
+  background: #1A1B22;
+  box-shadow: none;
+  z-index: 101;
+  border-radius: 0 0 16px 16px;
+}
+}

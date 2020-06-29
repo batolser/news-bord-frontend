@@ -1,0 +1,6 @@
+@import url(./_active/nav__items_active.css);
+
+.nav__items {
+  display: flex;
+  margin: 0;
+}

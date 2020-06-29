@@ -1,0 +1,40 @@
+@import url(./_about/description__title_about.css);
+
+.description__title {
+  font-family: 'Roboto Slab', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 64px;
+  margin: 0;
+  padding-bottom: 32px;
+}
+
+
+@media screen and (min-width: 715px) and (max-width: 1023px) {
+
+.description__title {
+  font-size: 36px;
+line-height: 40px;
+padding-bottom: 16px;
+max-width: 385px;
+}
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+
+  .description__title {
+    font-size: 36px;
+  line-height: 40px;
+  padding-bottom: 16px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+  .description__title {
+  font-size: 36px;
+  line-height: 40px;
+  padding-bottom: 16px;
+}
+}

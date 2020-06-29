@@ -3,39 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge"><!--уточнить что это-->
-  <title>News Bord</title>
-  <link rel="stylesheet" href="./normalize.css">
-  <link rel="stylesheet" href="./style.css">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>NewsBord</title>
+  <link rel="shortcut icon" type="image/x-icon" src="<%=require('./images/favicon.ico').default%>">
+  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.saved_articles.css %>">
 </head>
 <body>
   <div class="page-wrapper">
     <div class="page">
-      <header class="header header__logout">
-        <h1 class="header__logo">NewsBord</h1>
-        <nav class="nav">
-          <ul class="nav__items">
-            <li class="nav__item"><a class="nav__link" >Главная</a></li>
-            <li class="nav__item"><button class="button button__auth">Авторизоваться</button></li>
-          </ul>
-        </nav>
-      </header>
-      <header class="header header__login">
-        <h1 class="header__logo header__logo_login">NewsBord</h1>
-        <nav class="nav">
-          <ul class="nav__items">
-            <li class="nav__item nav__item_login"><a class="nav__link nav__link_login">Главная</a></li>
-            <li class="nav__item nav__item_login"><a class="nav__link nav__link_login">Сохраненные статьи</a></li>
-            <li class="nav__item nav__item_login"><button class="button button__auth button__auth_login"><p class="login__user">Грета</p><img class="icon__logout" src="./images/Union.svg" alt="icon logout"></button></li>
-          </ul>
-        </nav>
-      </header>
-      <form class="search__form">
-        <input type="text" name="search" class="search-field" placeholder="Текст" required="" minlength="" maxlength="">
-        <button type="submit" name='input' class="button button__search">Искать</button>
-      </form>
+        <header class="header header__login header__login_light-theme header__active_light-theme">
+          <h1 class="header__logo header__logo_light-theme header__logo_active_light-theme">NewsBord</h1>
+          <div class="menu__button menu__button_light-theme menu__button_close_light-theme"></div>
+          <nav class="nav">
+            <ul class="nav__items">
+              <li class="nav__item nav__item_login nav__item_light-theme"><a class="nav__link nav__link_login" href="main.html">Главная</a></li>
+              <li class="nav__item nav__item_login nav__item_light-theme"><a class="nav__link nav__link_login nav__link_in nav__link_in_light-theme" href="index.html">Сохраненные статьи</a></li>
+              <li class="nav__item nav__item_login nav__item_light-theme"><button class="button button__auth button__auth_login button__auth_light-theme"><p class="nav__login">Грета</p><img class="nav__icon-logout" src="<%=require('./images/logout_black.svg').default%>"alt="icon logout"></button></li>
+            </ul>
+          </nav>
+        </header>
+        <div class="cover"></div>
+
+
+    <section class="saved">
+      <h6 class="saved__subtitle">Сохранённые статьи</h6>
+      <h2 class="saved__title">Грета, у вас 5 сохранённых статей</h2>
+      <p class="saved__description">По ключевым словам: <span class="saved__description saved__description_keyword">Природа</span>, <span class="saved__description saved__description_keyword">Тайга</span> и <span class="saved__description saved__description_keyword">2</span> <span class="saved__description saved__description_keyword">другим</span></p>
+    </section>
+    <section class="results">
+
+        <div class="cards-list cards-list__saved">
+          <a class="card" href="https://nat-geo.ru/nature/natsionalnoe-dostoyanie-parki">
+            <img class="card__img" src="<%=require('./images/image_08.png').default%>" alt="plants">
+            <p class="card__keyword">Природа</p>
+            <div class="card__top">
+              <div class="card__tag card__tag_delete">
+                <p class="card__tag card__tag_content card__tag_content_delete">Убрать из сохранённых</p>
+              </div>
+              <div class="card__icon card__icon_trash"></div>
+            </div>
+            <div class="card__description">
+              <div class="card__fix">
+                <p class="card__date">2 августа, 2019</p>
+                <h4 class="card__title">Национальное достояние – парки – парки – парки – парки – парки – парки</h4>
+                <p class="card__text">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе. к природе. к природе.</p>
+              </div>
+              <p class="card__source">Лента.ру</p>
+            </div>
+          </a>
+          <a class="card" href="https://nat-geo.ru/nature/natsionalnoe-dostoyanie-parki">
+            <img class="card__img" src="<%=require('./images/image_08.png').default%>" alt="plants">
+            <p class="card__keyword">Тайга</p>
+            <div class="card__top">
+              <div class="card__tag card__tag_delete card__tag_disactive">
+                <p class="card__tag card__tag_content card__tag_content_delete">Убрать из сохранённых</p>
+              </div>
+              <div class="card__icon card__icon_trash"></div>
+            </div>
+            <div class="card__description">
+              <div class="card__fix">
+                <p class="card__date">2 августа, 2019</p>
+                <h4 class="card__title">Национальное достояние – парки</h4>
+                <p class="card__text">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.</p>
+              </div>
+              <p class="card__source">Лента.ру</p>
+            </div>
+          </a>
+          <a class="card" href="https://nat-geo.ru/nature/natsionalnoe-dostoyanie-parki">
+            <img class="card__img" src="<%=require('./images/image_08.png').default%>" alt="plants">
+            <p class="card__keyword">Тайга</p>
+            <div class="card__top">
+              <div class="card__tag card__tag_delete card__tag_disactive">
+                <p class="card__tag card__tag_content card__tag_content_delete">Убрать из сохранённых</p>
+              </div>
+              <div class="card__icon card__icon_trash"></div>
+            </div>
+            <div class="card__description">
+              <div class="card__fix">
+                <p class="card__date">2 августа, 2019</p>
+                <h4 class="card__title">Национальное достояние – парки</h4>
+                <p class="card__text">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.</p>
+              </div>
+              <p class="card__source">Лента.ру</p>
+            </div>
+          </a>
+          <a class="card" href="https://nat-geo.ru/nature/natsionalnoe-dostoyanie-parki">
+            <img class="card__img" src="<%=require('./images/image_08.png').default%>" alt="plants">
+            <p class="card__keyword">Фотография</p>
+            <div class="card__top">
+              <div class="card__tag card__tag_delete card__tag_disactive">
+                <p class="card__tag card__tag_content card__tag_content_delete">Убрать из сохранённых</p>
+              </div>
+              <div class="card__icon card__icon_trash"></div>
+            </div>
+            <div class="card__description">
+              <div class="card__fix">
+                <p class="card__date">2 августа, 2019</p>
+                <h4 class="card__title">«Первозданная тайга»: новый фотопроект Игоря Шпиленка</h4>
+                <p class="card__text">Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где теперь наконец-то может появиться природный заказник.</p>
+              </div>
+              <p class="card__source">Лента.ру</p>
+            </div>
+          </a>
+        </div>
+
+    </section>
+    <footer class="footer">
+      <p class="footer__copyright">&#169; 2020 Supersite, Powder by News API</p>
+      <div class="footer__links">
+        <div class="footer__links footer__links_wrapper">
+          <p class="nav__item nav__item_footer"><a class="nav__link nav__link_footer" href="index.html">Главная</a></p>
+          <p class="nav__item nav__item_footer"><a class="nav__link nav__link_footer" href="https://praktikum.yandex.ru">Яндекс.Практикум</a></p>
+        </div>
+        <a class="footer__social" href="https://github.com/batolser"><img class="social" src="<%=require('./images/github.svg').default%>" alt="github icon"></a>
+        <a class="footer__social" href="https://www.facebook.com/batolser"><img class="social" src="<%=require('./images/fb.svg').default%>" alt="fb icon"></a>
+      </div>
+    </footer>
     </div>
   </div>
+  <script src="<%= htmlWebpackPlugin.files.chunks.saved_articles.entry %>"></script>
 </body>
 </html>
 

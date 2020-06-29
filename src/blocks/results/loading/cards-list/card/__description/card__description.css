@@ -1,0 +1,34 @@
+.card__description {
+  display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  padding: 20px 24px 0;
+    height: 304px;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 715px) and (max-width: 1023px) {
+
+
+
+  .card__description {
+    padding: 16px 16px 0;
+    height: 270px;
+}
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+  .card__description {
+  padding: 16px 16px 0;
+  max-height: 250px;
+}
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+  .card__description {
+  padding: 16px 16px 0;
+  max-height: 250px;
+}
+}
+

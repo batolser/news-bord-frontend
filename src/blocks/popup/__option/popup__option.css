@@ -1,0 +1,16 @@
+@import url(./_ok/popup__option_ok.css);
+@import url(./_span/popup__option_span.css);
+
+.popup__option {
+  width: 226px;
+  margin: 0 auto;
+  border: none;
+  background: none;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #2F71E5;
+  padding: 0;
+}

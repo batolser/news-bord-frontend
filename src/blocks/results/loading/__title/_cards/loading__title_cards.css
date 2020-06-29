@@ -1,0 +1,26 @@
+.loading__title.loading__title_cards {
+  font-size: 40px;
+  line-height: 46px;
+  margin: 0;
+  align-self: flex-start;
+  margin-bottom: 2px;
+}
+
+
+@media screen and (max-width: 1311px) {
+  .loading__title.loading__title_cards {
+  padding-left: 40px;
+}
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+  .loading__title.loading__title_cards {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+.loading__title.loading__title_cards {
+  margin-bottom: 0;
+}
+}

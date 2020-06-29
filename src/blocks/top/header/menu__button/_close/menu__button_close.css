@@ -1,0 +1,7 @@
+@import url(./_light-theme/menu__button_close_light-theme.css);
+
+.menu__button.menu__button_close {
+  background-image: url(../../../../../images/close.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+}

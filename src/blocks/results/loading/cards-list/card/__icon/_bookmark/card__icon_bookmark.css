@@ -1,0 +1,10 @@
+@import url(./_marked/card__icon_bookmark_marked.css);
+
+.card__icon.card__icon_bookmark {
+  background-image: url(../../../../../../../images/bookmark.svg);
+  transition: background-image .15s linear .15s;
+}
+
+.card__icon.card__icon_bookmark:hover {
+  background-image: url(../../../../../../../images/bookmark_hover.svg);
+}

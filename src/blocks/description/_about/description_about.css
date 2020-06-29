@@ -1,0 +1,26 @@
+.description.description_about {
+  color: #1A1B22;
+  padding-top: 51px;
+  margin: 0;
+}
+
+@media screen and (min-width: 715px) and (max-width: 1023px) {
+  .description.description_about {
+  padding-top: 0;
+}
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+
+  .description.description_about {
+  padding-top: 24px;
+}
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+  .description.description_about {
+  padding-top: 24px;
+}
+}
+
