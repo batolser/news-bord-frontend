@@ -9,7 +9,7 @@
 
 Верстка двух страниц сервиса - "Главная" и "Сохраненные статьи".
 
-[Ссылка на проект](https://github.com/batolser/news-bord-frontend.git)
+[Ссылка на проект](https://batolser.github.io/news-bord-frontend/)
 
 Version 1.0.3
 
