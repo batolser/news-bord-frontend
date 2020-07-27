@@ -15,17 +15,17 @@
     <div class="page">
       <section class="top">
         <!-- header отрисовыевается в зависимости от статуса пользователя (зарегистрирован/нет)-->
-        <!-- <header class="header header__logout">
+        <header class="header header__logout">
           <h1 class="header__logo">NewsBord</h1>
-          <div class="menu__button menu__button_active"></div>
-          <nav class="nav nav__active">
-            <ul class="nav__items nav__items_active">
+          <div class="menu__button"></div>
+          <nav class="nav">
+            <ul class="nav__items">
               <li class="nav__item"><a class="nav__link nav__link_in" href="index.html">Главная</a></li>
-              <li class="nav__item"><button class="button button__auth button__auth_active">Авторизоваться</button></li>
+              <li class="nav__item"><button class="button button__auth">Авторизоваться</button></li>
             </ul>
           </nav>
-        </header> -->
-        <header class="header header__login">
+        </header>
+        <!-- <header class="header header__login">
           <h1 class="header__logo">NewsBord</h1>
           <div class="menu__button"></div>
           <nav class="nav">
@@ -35,7 +35,7 @@
               <li class="nav__item"><button class="button button__auth button__auth_login"><p class="nav__login">Грета</p><img class="nav__icon-logout" src="<%=require('./images/logout.svg').default%>" alt="icon logout"></button></li>
             </ul>
           </nav>
-        </header>
+        </header> -->
         <div class="cover"></div>
         <div class="description">
           <h2 class="description__title">Что в мире творится?</h2>
@@ -145,7 +145,7 @@
       </div>
     </section>
        <!-- добавить класс popup_is-opened для вызова попапа-->
-    <section class="popup popup__singup">
+    <!-- <section class="popup popup__singup">
       <div class="popup__content">
         <img class="popup__close" src="<%=require('./images/close.svg').default%>" alt="close popup">
         <h3 class="popup__title">Регистрация</h3>
@@ -179,10 +179,14 @@
           Войти
         </button>
       </div>
-    </section>
+    </section> -->
      <!-- добавить класс popup_is-opened для вызова попапа-->
-    <section class="popup popup__singin">
-      <div class="popup__content">
+     <div class="popup">
+      <div class="popup__content"></div>
+    </div>
+    <!-- <section > -->
+        <!-- <template id="popup-signin" class="popup popup__singin"> -->
+        <template id="popup-signin">
         <img class="popup__close" src="<%=require('./images/close.svg').default%>" alt="close popup">
         <h3 class="popup__title">Вход</h3>
         <form class="popup__form" name="singin">
@@ -206,8 +210,9 @@
           <span class="popup__option popup__option_span">или </span>
           Зарегистрироваться
         </button>
-      </div>
-    </section>
+      <!-- </div> -->
+    <!-- </section> -->
+  </template>
      <!-- добавить класс popup_is-opened для вызова попапа-->
     <section class="popup popup__ok">
       <div class="popup__content popup__content_ok">
