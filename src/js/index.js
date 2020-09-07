@@ -551,13 +551,13 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
 
   }
 
-  const searchForm = new Form(SEARCH_FORM);
+  // const searchForm = new Form(SEARCH_FORM);
 
 
   const searchFormSubmit = async () => {
     event.preventDefault();
 
-    const keyWord = searchForm.getValue();
+    const keyWord = SEARCH_FORM.children[0].value;
 
       newsApi.getNews(keyWord)
         .then((res) => {

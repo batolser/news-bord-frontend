@@ -1,6 +1,7 @@
 @import url(./__auth/button__auth.css);
 @import url(./__active/button__active.css);
 @import url(./__more/button__more.css);
+@import url(./__hide/button__hide.css);
 @import url(./__popup/button__popup.css);
 
 .button {
