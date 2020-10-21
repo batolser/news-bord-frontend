@@ -3,6 +3,8 @@
 .card__icon.card__icon_bookmark {
   background-image: url(../../../../../../../images/bookmark.svg);
   transition: background-image .15s linear .15s;
+  margin: 0;
+  
 }
 
 .card__icon.card__icon_bookmark:hover {

@@ -39,7 +39,7 @@
       </div>
       <!-- убрать класс loading_disactive для вызова блока-->
       <div class="loading loading_disactive">
-        <img class="nothing" src="./images/not-found_v1.svg" alt="search nothing">
+        <img class="nothing" src="<%=require('./images/not-found_v1.svg').default%>" alt="search nothing">
         <h5 class="loading__title">Ничего не найдено</h5>
         <p class="loading__text loading__text_nothing">К сожалению по вашему запросу ничего не найдено.</p>
       </div>
@@ -120,7 +120,7 @@
       </div>
     </section>
     <section class="about">
-      <img class="about__img" src="./images/image-03.png" alt="avatar">
+      <img class="about__img" src="<%=require('./images/image-03.png').default%>" alt="avatar">
       <div class="description description_about">
         <h2 class="description__title description__title_about">Об авторе</h2>
         <p class="description__text description__text_about">Это блок с описанием автора проекта. Здесь следует указать, как вас зовут, чем вы занимаетесь, какими технологиями разработки владеете.</p>
@@ -237,8 +237,8 @@
           <p class="nav__item nav__item_footer"><a class="nav__link nav__link_footer" href="index.html">Главная</a></p>
           <p class="nav__item nav__item_footer"><a class="nav__link nav__link_footer" href="https://praktikum.yandex.ru">Яндекс.Практикум</a></p>
         </div>
-        <a class="footer__social" href="https://github.com/batolser"><img class="social" src="./images/github.svg" alt="github icon"></a>
-        <a class="footer__social" href="https://www.facebook.com/batolser"><img class="social" src="./images/fb.svg" alt="fb icon"></a>
+        <a class="footer__social" href="https://github.com/batolser"><img class="social" src="<%=require('./images/github.svg').default%>" alt="github icon"></a>
+        <a class="footer__social" href="https://www.facebook.com/batolser"><img class="social" src="<%=require('./images/fb.svg').default%>" alt="fb icon"></a>
       </div>
     </footer>
     </div>

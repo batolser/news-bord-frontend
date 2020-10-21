@@ -186,7 +186,8 @@ const newsApi = new NewsApi();
 
 class MainApi {
   constructor() {
-    this._mainURL = 'https://api.news-bord-api.cf';
+    this._mainURL = 'https://api.news-bord.students.nomoreparties.co';
+    this.isLoggedIn = false;
     // this._headers = {
     //   'Content-Type': 'application/json',
     // };
@@ -289,15 +290,18 @@ class MainApi {
 const mainApi = new MainApi ();
 
 class NewsCard {
+  // constructor(cardData) {
+  //   this.cardData = cardData;
+  // }
 
   createCard (cardData) {
     const card = document.createElement('a');
     const cardImage = document.createElement('img');
     const cardKeyword = document.createElement('p');
     const cardTop = document.createElement('div');
-    const cardTagContener = document.createElement('div');
+    const cardTagContainer = document.createElement('div');
     const cardTag = document.createElement('p');
-    const cardBookmark = document.createElement('p');
+    const cardBookmark = document.createElement('div');
     const cardDescription = document.createElement('div');
     const cardFix = document.createElement('div');
     const cardDate = document.createElement('p');
@@ -309,9 +313,9 @@ class NewsCard {
     cardImage.classList.add('card__img');
     cardKeyword.classList.add('card__keyword');
     cardTop.classList.add('card__top');
-    cardTagContener.classList.add('card__tag', 'card__tag_disactive');
+    cardTagContainer.classList.add('card__tag', 'card__tag_container', 'card__tag_disactive');
     cardTag.classList.add('card__tag', 'card__tag_content');
-    cardBookmark.classList.add('card__icon', 'card__icon_bookmarkg');
+    cardBookmark.classList.add('card__icon', 'card__icon_bookmark');
     cardDescription.classList.add('card__description');
     cardFix.classList.add('card__fix');
     cardDate.classList.add('card__date');
@@ -325,7 +329,8 @@ class NewsCard {
     card.setAttribute('target', '_blank');
     cardImage.setAttribute('src', cardData.urlToImage);
     cardImage.setAttribute('alt', 'Картинка');
-    // cardKeyword.textContent = cardData.keyword;
+    cardKeyword.textContent = cardData.keyword;
+    cardTag.textContent = 'Войдите, чтобы сохранять статьи';
     this._date = cardData.publishedAt;
     cardDate.textContent = (this._date);
     cardTitle.textContent = cardData.title;
@@ -335,13 +340,15 @@ class NewsCard {
     // else date.textContent = articleDate;
 
 
+
+
     card.appendChild(cardImage);
     card.appendChild(cardKeyword);
     card.appendChild(cardTop);
     card.appendChild(cardDescription);
-    cardTop.appendChild(cardTagContener);
+    cardTop.appendChild(cardTagContainer);
     cardTop.appendChild(cardBookmark);
-    cardTagContener.appendChild(cardTag);
+    cardTagContainer.appendChild(cardTag);
     cardDescription.appendChild(cardFix);
     cardDescription.appendChild(cardSource);
     cardFix.appendChild(cardDate);
@@ -350,13 +357,36 @@ class NewsCard {
 
     return card;
   }
+
+  // addArticles(event, cardData) {
+  //   event.stopPropagation();
+  //   const {
+  //     keyword, title, text, date, source, link, image
+  //   } = cardData;
+
+  //  MainApi.createArticle({
+  //     keyword: keyword,
+  //     title: title,
+  //     text: description,
+  //     date: publishedAt,
+  //     source: source.name,
+  //     link: url,
+  //     image: urlToImage,
+  //   })
+  //     .then((res) => {
+  //       this.data._id = res._id;
+
+  //     })
+  //     .catch((err) => err.message);
+  // }
 }
 
 
 
-class NewsCardList {
+class NewsCardList extends BaseComponent {
   constructor(resultsContainer, articlesContainer, cardList,
-    showMoreButton, newsCard) {
+    showMoreButton, newsCard, api) {
+super();
     this._articlesContainer = articlesContainer;
     this._resultsContainer = resultsContainer;
     this._showMoreButton = showMoreButton;
@@ -364,6 +394,11 @@ class NewsCardList {
     this._cardList = cardList;
     this.chunk = 3;
     this.newsCard = newsCard;
+    this.api = api;
+    // this.handlers = [
+    //   { element: document.querySelector('.card__icon_bookmark'), event: 'click', callback: () => addArticles() }
+    // ];
+
   }
 
   setArticlesArray(articles, keyWord) {
@@ -385,6 +420,11 @@ class NewsCardList {
           this._allFoundedArticles.shift();
         }
       }
+      this._setHandlers([{
+        element: this._cardList,
+        event: 'click',
+        callback: (event) => this.toggleMark(event),
+      }]);
     }
 
   _showMore() {
@@ -402,7 +442,49 @@ class NewsCardList {
     this._showMoreButton.addEventListener('click', this._showMore.bind(this));
 
   }
-}
+
+  toggleMark(event) {
+
+    if (event.target.classList.contains('card__icon_bookmark')) {
+      if(this.api.loggedIn){
+        this.needReg(event);
+      }
+      else {
+        this.addArticles();
+      }
+
+    }
+  }
+
+  needReg(event) {
+    event.preventDefault();
+      event.target.previousSibling.classList.remove('card__tag_disactive');
+
+  }
+
+  // addArticles(event, data) {
+  //   event.stopPropagation();
+  //   const {
+  //     keyword, title, text, date, source, link, image
+  //   } = data;
+
+  //   this.api.createArticle({
+  //     keyword: keyword,
+  //     title: title,
+  //     text: description,
+  //     date: publishedAt,
+  //     source: source.name,
+  //     link: url,
+  //     image: urlToImage,
+  //   })
+  //     .then((res) => {
+  //       this.data._id = res._id;
+
+  //     })
+  //     .catch((err) => err.message);
+  // }
+  }
+
 
 const containerHeader = document.querySelector('.container__header');
 const headerLoginWhite = document.querySelector('#header-login_white');
@@ -441,7 +523,7 @@ class Header extends BaseComponent{
 
 const newsCard = new NewsCard();
 const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST,
-  SHOWMORE_BUTTON, newsCard);
+  SHOWMORE_BUTTON, newsCard, mainApi);
   newsCardList.setEventListener();
 
   class Form extends BaseComponent {
