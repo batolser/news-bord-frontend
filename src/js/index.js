@@ -109,7 +109,7 @@ const newsApi = new NewsApi();
 
 class MainApi {
   constructor() {
-    this._mainURL = 'http://api.news-bord.students.nomoreparties.co';
+    this._mainURL = 'http://localhost:3000';
     this.isLoggedIn = false;
     // this._headers = {
     //   'Content-Type': 'application/json',
