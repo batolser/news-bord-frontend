@@ -74,83 +74,6 @@ class BaseComponent {
 
 
 
-class Popup extends BaseComponent {
-  constructor(signUpForm, signInForm) {
-    super();
-    // this.popup = popup;
-    // this.content = content;
-    // this.closePop = this.popup.closePop;
-    this.signUpForm = signUpForm;
-    this.signInForm = signInForm;
-    this.handlers = [
-      { element: document.querySelector('.popup__close'), event: 'click', callback: () => this.close() }
-      // { element: document.querySelector('.button__auth'), event: 'click', callback: () => this.open() }
-    ];
-  }
-
-  setContent(template) {
-
-    popupContent.appendChild(template.cloneNode(true).content);
-
-    this.handlers.push({
-      element: document.querySelector('.popup__option'),
-      event: 'click',
-      callback: (e) => this.setOpenNewPopup(e),
-    });
-
-
-    this._setHandlers(this.handlers);
-  }
-
-  clearContent() {
-    const popupTitle = popupContent.querySelector('.popup__title');
-    const popupForm = popupContent.querySelector('.popup__form');
-    const popupOption = popupContent.querySelector('.popup__option');
-
-    if (popupTitle) popupContent.removeChild(popupContent.querySelector('.popup__title'));
-    if (popupForm) popupContent.removeChild(popupContent.querySelector('.popup__form'));
-    if (popupOption) popupContent.removeChild(popupContent.querySelector('.popup__option'));
-  }
-
-  open() {
-    mainPopup.classList.toggle('popup_is-opened');
-    // this.setContent();
-    }
-
-  close() {
-    mainPopup.classList.remove('popup_is-opened');
-    this.clearContent();
-    }
-
-  setOpenNewPopup (e) {
-      if (e.target.id === 'toSignUp') {
-        this.clearContent();
-        this.setContent(popupSignup);
-        this.signInForm.removeListeners();
-        this.signUpForm.init();
-      } else if (e.target.id === 'toSignIn') {
-        this.clearContent();
-        this.setContent(popupSignin);
-        this.signUpForm.removeListeners();
-        this.signInForm.init();
-    }
-  }
-
-  setOpenOkPopup () {
-    this.setContent(popupOk);
-
-    this.handlers.push({
-      element: document.querySelector('.popup__option'),
-      event: 'click',
-      callback: (e) => this.setOpenNewPopup(e),
-    });
-
-    this._setHandlers(this.handlers);
-  }
-
-}
-
-
 //основной функционал
 
 class NewsApi {
@@ -186,7 +109,7 @@ const newsApi = new NewsApi();
 
 class MainApi {
   constructor() {
-    this._mainURL = 'https://api.news-bord.students.nomoreparties.co';
+    this._mainURL = 'http://api.news-bord.students.nomoreparties.co';
     this.isLoggedIn = false;
     // this._headers = {
     //   'Content-Type': 'application/json',
@@ -247,9 +170,18 @@ class MainApi {
         password,
       }),
     })
+    .then((res) => {
+      if (res.status !== 200) {
+        throw (err => {
+          console.log(err);
+        })
+      }
+      return res.json();
+    })
     .catch(err => {
       console.log(err);
     })
+
     }
 
   getUserData() {
@@ -520,11 +452,105 @@ class Header extends BaseComponent{
 }
 
 
+const header = new Header({ color: 'white' });
 
 const newsCard = new NewsCard();
 const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST,
   SHOWMORE_BUTTON, newsCard, mainApi);
   newsCardList.setEventListener();
+
+
+
+  class Popup extends BaseComponent {
+    constructor(signUpForm, signInForm) {
+      super();
+      // this.popup = popup;
+      // this.content = content;
+      // this.closePop = this.popup.closePop;
+      this.signUpForm = signUpForm;
+      this.signInForm = signInForm;
+      this.handlers = [
+        { element: document.querySelector('.popup__close'), event: 'click', callback: () => this.close() }
+        // { element: document.querySelector('.button__auth'), event: 'click', callback: () => this.open() }
+      ];
+    }
+
+    setContent(template) {
+
+      popupContent.appendChild(template.cloneNode(true).content);
+
+      this.handlers.push({
+        element: document.querySelector('.popup__option'),
+        event: 'click',
+        callback: (e) => this.setOpenNewPopup(e),
+      });
+
+
+      this._setHandlers(this.handlers);
+    }
+
+    clearContent() {
+      const popupTitle = popupContent.querySelector('.popup__title');
+      const popupForm = popupContent.querySelector('.popup__form');
+      const popupOption = popupContent.querySelector('.popup__option');
+
+      if (popupTitle) popupContent.removeChild(popupContent.querySelector('.popup__title'));
+      if (popupForm) popupContent.removeChild(popupContent.querySelector('.popup__form'));
+      if (popupOption) popupContent.removeChild(popupContent.querySelector('.popup__option'));
+    }
+
+    open() {
+      mainPopup.classList.toggle('popup_is-opened');
+      // this.setContent();
+      }
+
+    close() {
+      mainPopup.classList.remove('popup_is-opened');
+      this.clearContent();
+      }
+
+    setOpenNewPopup (e) {
+        if (e.target.id === 'toSignUp') {
+          this.clearContent();
+          this.setContent(popupSignup);
+          this.signInForm.removeListeners();
+          this.signUpForm.init();
+        } else if (e.target.id === 'toSignIn') {
+          this.clearContent();
+          this.setContent(popupSignin);
+          this.signUpForm.removeListeners();
+          this.signInForm.init();
+      }
+    }
+
+
+  }
+
+  class PopupOk extends Popup {
+    constructor() {
+      super();
+      this.handlers = [
+        { element: document.querySelector('.popup__close'), event: 'click', callback: () => this.close() }
+        // { element: document.querySelector('.button__auth'), event: 'click', callback: () => this.open() }
+      ];
+    }
+
+    setOpenOkPopup () {
+      this.clearContent();
+      this.setContent(popupOk);
+
+      this.handlers.push({
+        element: document.querySelector('.popup__option'),
+        event: 'click',
+        callback: (e) => this.setOpenNewPopup(e),
+      });
+
+      this._setHandlers(this.handlers);
+    }
+
+  }
+
+  const openPopupOk = new PopupOk();
 
   class Form extends BaseComponent {
     constructor() {
@@ -574,7 +600,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       event.preventDefault();
       this.api.signup(this.getInfo())
         .then(() => {
-          popup.setOpenOkPopup();
+          openPopupOk.setOpenOkPopup();
         })
         .catch((err) => {
           console.log(err);
@@ -601,24 +627,19 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
     constructor(api) {
       super();
       this.api = api;
+      this.header = header;
     }
 
     signIn(event) {
       event.preventDefault();
       this.api.signin(this.getInfo())
-        .then(() => {
-          this.api.getUserData()
           .then((res) => {
-            header.render({ isLoggedIn: true, userName: res.name });
+            this.header.render({ color: 'white' , isLoggedIn: true, userName: res.name });
           })
           .catch((err) => {
             console.log(err);
           })
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
+        };
 
     init() {
       this.getInputs();
@@ -668,7 +689,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
 
 
 
-  const header = new Header({ color: 'white' });
+
   const initPage = async () => {
 
 
@@ -681,9 +702,10 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
     });
 
     const signUpForm = new FormSignUp(mainApi);
-    const signInForm = new FormSignIn(mainApi);
+    const signInForm = new FormSignIn(mainApi, header);
 
     const popup = new Popup(signUpForm, signInForm);
+
 
     const openPopup = async () => {
       popup.setContent(popupSignin);
