@@ -1,5 +1,6 @@
 @import url(./_bookmark/card__icon_bookmark.css);
 @import url(./_trash/card__icon_trash.css);
+@import url(./_ok/card__icon_ok.css);
 
 .card__icon {
   background: #FFFFFF;

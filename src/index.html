@@ -137,18 +137,18 @@
         <!-- <template id="popup-signin" class="popup popup__singin"> -->
     <template id='popup-signin'>
         <h3 class="popup__title">Вход</h3>
-        <form class="popup__form" name="singin">
+        <form class="popup__form" name="singin" novalidate>
           <div class="popup__item">
             <label class="popup__field">
               Email
-              <input type="email" name="email" class="popup__input" placeholder="Введите почту" required>
+              <input type="email" name="email" class="popup__input" required>
             </label>
           </div>
           <div class="popup__input popup__input_error"><p class="popup__error">Oib,rf</p></div>
           <div class="popup__item">
             <label class="popup__field">
               Пароль
-              <input type="password" name="password" class="popup__input" placeholder="Введите пароль" required minlength='8'>
+              <input type="password" name="password" minlength="8" maxlength="30" class="popup__input" required>
             </label>
           </div>
           <div class="popup__input popup__input_error"><p class="popup__error">Ошибка</p></div>
@@ -165,25 +165,25 @@
     <template id='popup-signup'>
       <!-- <img class="popup__close" src="./images/close.svg" alt="close popup"> -->
       <h3 class="popup__title">Регистрация</h3>
-      <form class="popup__form" name="signup">
+      <form class="popup__form" name="signup" novalidate>
         <div class="popup__item">
           <label class="popup__field">
             Email
-            <input type="email" name="email" class="popup__input" placeholder="Введите почту" required>
+            <input type="email" name="email" class="popup__input" required>
           </label>
         </div>
         <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
         <div class="popup__item">
           <label class="popup__field">
             Пароль
-            <input type="password" name="password" class="popup__input" placeholder="Введите пароль" required minlength='8'>
+            <input type="password" name="password"  minlength="8" maxlength="30" class="popup__input" required>
           </label>
         </div>
         <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
         <div class="popup__item">
           <label class="popup__field">
             Имя
-            <input type="text" name="name" class="popup__input" placeholder="Введите своё имя" required minlength='2' maxlength='30'>
+            <input type="text" name="name"  minlength="2" maxlength="30"class="popup__input" required>
           </label>
         </div>
         <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
@@ -214,7 +214,7 @@
         <ul class="nav__items">
           <li class="nav__item"><a class="nav__link nav__link_in" href="index.html">Главная</a></li>
           <li class="nav__item"><a class="nav__link" href="save.html">Сохраненные статьи</a></li>
-          <li class="nav__item"><button class="button button__auth button__auth_login"><p class="nav__login">Грета</p><img class="nav__icon-logout" src="<%=require('./images/logout.svg').default%>" alt="icon logout"></button></li>
+          <li class="nav__item"><button id='btn_logout'class="button button__auth button__auth_login"><p class="nav__login">Грета</p><img class="nav__icon-logout" src="<%=require('./images/logout.svg').default%>" alt="icon logout"></button></li>
         </ul>
       </nav>
    </template>
@@ -225,7 +225,7 @@
       <nav class="nav">
         <ul class="nav__items">
           <li class="nav__item"><a class="nav__link nav__link_in" href="index.html">Главная</a></li>
-          <li class="nav__item"><button class="button button__auth">Авторизоваться</button></li>
+          <li class="nav__item"><button id='btn_auth' class="button button__auth">Авторизоваться</button></li>
         </ul>
       </nav>
     </template>

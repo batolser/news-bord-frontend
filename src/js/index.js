@@ -102,6 +102,8 @@ class NewsApi {
       })
       .catch((err) => Promise.reject(err));
   }
+
+
 }
 
 const newsApi = new NewsApi();
@@ -109,35 +111,9 @@ const newsApi = new NewsApi();
 
 class MainApi {
   constructor() {
-    this._mainURL = 'http://localhost:3000';
+    this._mainURL = 'http://api.news-bord.students.nomoreparties.co';
     this.isLoggedIn = false;
-    // this._headers = {
-    //   'Content-Type': 'application/json',
-    // };
   }
-
-  // makeFetch(url, method = 'GET', mode = 'cors', credentials = 'include', body = undefined) {
-  //   if (body) {
-  //     body = JSON.stringify(body);
-  // }
-  //   return fetch(`${this._mainURL}/${url}`,
-  //   {
-  //       method,
-  //       mode,
-  //       credentials,
-  //       headers: this._headers,
-  //       body
-  //   })
-  //       .then(res => {
-  //           if (!res.ok) {
-  //               return Promise.reject('Ошибка');
-  //           }
-  //           return res.json();
-  //       })
-  //       .catch(err => {
-  //           console.log(err);
-  //         })
-  //       }
 
   signup({email, password, name}) {
     return fetch(`${this._mainURL}/signup`, {
@@ -187,9 +163,9 @@ class MainApi {
   getUserData() {
     return fetch(`${this._mainURL}/users/me`, {
       method: 'GET',
-      credentials: 'include',
+      // credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
     .then((res) => {
@@ -205,17 +181,67 @@ class MainApi {
     })
   }
 
+
   // getArticles() {
   //   return this.makeFetch(`articles`);
   // }
 
-  // createArticle(keyword, link, image, title, text, date, source) {
-  //   return this.makeFetch(`signup`, 'POST', ({ keyword, link, image, title, text, date, source }));
-  // }
+  createArticle(article) {
+    return fetch(`${this._mainURL}/articles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({
+        // keyword: article.keyword,
+        keyword: article.keyword,
+        link: article.link,
+        image: article.image,
+        title: article.title,
+        text: article.text,
+        date: article.date,
+        source: article.source,
+      }),
+    })
+    .then((res) => {
+      return res.json();
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
-  // removeArticle(articleId) {
-  //   return this.makeFetch(`articles/${articleId}`, 'DELETE');
-  // }
+  removeArticle(articleId) {
+    return fetch(`${this._mainURL}/articles`+articleId, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      }
+  })
+  .then((res) => {
+    return res.json();
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
+
+getArticles() {
+  return fetch(`${this._mainURL}/articles`, {
+      method: 'GET',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+  .then((res) => {
+    return res.json();
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
 
 }
 
@@ -226,7 +252,7 @@ class NewsCard {
   //   this.cardData = cardData;
   // }
 
-  createCard (cardData) {
+  createCard (cardData, keyWord) {
     const card = document.createElement('a');
     const cardImage = document.createElement('img');
     const cardKeyword = document.createElement('p');
@@ -261,7 +287,7 @@ class NewsCard {
     card.setAttribute('target', '_blank');
     cardImage.setAttribute('src', cardData.urlToImage);
     cardImage.setAttribute('alt', 'Картинка');
-    cardKeyword.textContent = cardData.keyword;
+    cardKeyword.textContent = cardData.keyword || keyWord;
     cardTag.textContent = 'Войдите, чтобы сохранять статьи';
     this._date = cardData.publishedAt;
     cardDate.textContent = (this._date);
@@ -338,8 +364,8 @@ super();
     this._allFoundedArticles = articles;
   }
 
-  addCard(newsCard) {
-    const element = this.newsCard.createCard(newsCard);
+  addCard(newsCard, keyWord) {
+    const element = this.newsCard.createCard(newsCard, keyWord);
     this._cardList.appendChild(element);
   }
 
@@ -348,7 +374,7 @@ super();
       this._articlesContainer.classList.remove('loading_disactive');
       if (this._allFoundedArticles.length > this.chunk) {
         for (let i = 0; i < this.chunk; i++) {
-          this.addCard(this._allFoundedArticles[0]);
+          this.addCard(this._allFoundedArticles[0], this.keyWord);
           this._allFoundedArticles.shift();
         }
       }
@@ -370,29 +396,55 @@ super();
     }
   }
 
+
   setEventListener() {
     this._showMoreButton.addEventListener('click', this._showMore.bind(this));
 
   }
 
+
+
   toggleMark(event) {
 
     if (event.target.classList.contains('card__icon_bookmark')) {
-      if(this.api.loggedIn){
-        this.needReg(event);
-      }
-      else {
-        this.addArticles();
+      if(!this.api.isLoggedIn){
+        const cardArticle = event.target.closest('.card');
+        const article = [];
+        article.keyword = cardArticle.querySelector('.card__keyword').textContent;
+        article.link = cardArticle.href;
+        article.image = cardArticle.querySelector('.card__img').src;
+        article.title = cardArticle.querySelector('.card__title').textContent;
+        article.text = cardArticle.querySelector('.card__text').textContent;
+        article.date = cardArticle.querySelector('.card__date').textContent;
+        article.source = cardArticle.querySelector('.card__source').textContent;
+
+        // event.preventDefault();
+        this.api.createArticle(article)
+        .then((res) => {
+          cardArticle.setAttribute('data-id', res.data._id);
+          cardArticle.querySelector('.card__icon_bookmark').classList.add('card__icon_ok');
+
+
+        })
+          .catch((err) => {
+            console.log(err);
+          })
       }
 
+      }
+      if(event.target.classList.contains('card__icon_trash')) {
+      const articleId = event.target.closest('.card').dataset.id;
+      this.api.removeArticle(articleId);
+      //перерисовать выведенные карточки
+      }
     }
   }
 
-  needReg(event) {
-    event.preventDefault();
-      event.target.previousSibling.classList.remove('card__tag_disactive');
+  // needReg(event) {
+  //   event.preventDefault();
+  //     event.target.previousSibling.classList.remove('card__tag_disactive');
 
-  }
+  // }
 
   // addArticles(event, data) {
   //   event.stopPropagation();
@@ -415,7 +467,7 @@ super();
   //     })
   //     .catch((err) => err.message);
   // }
-  }
+
 
 
 const containerHeader = document.querySelector('.container__header');
@@ -428,10 +480,18 @@ class Header extends BaseComponent{
     super();
   }
 
+  clearHeader() {
+    const headerLogo = containerHeader.querySelector('.header__logo');
+    const headerNav = containerHeader.querySelector('.nav');
+
+    if (headerLogo) containerHeader.removeChild(headerLogo);
+    if (headerNav) containerHeader.removeChild(headerNav);
+  }
+
   render(props) {
     // this.checkToken();
     if (props.isLoggedIn) {
-
+      this.clearHeader();
       const template = props.color === 'white'
         ? headerLoginWhite
         : headerLoginBlack;
@@ -439,12 +499,24 @@ class Header extends BaseComponent{
       const name = clone.querySelector('.nav__login');
       name.textContent = props.userName;
       containerHeader.appendChild(clone);
+      document.querySelector('.button__auth').addEventListener('click', logout);
     } else if (!props.isLoggedIn) {
       const clone = headerLogout.cloneNode(true).content;
       containerHeader.appendChild(clone);
     }
 
+
+
   }
+
+  logout() {
+
+    localStorage.removeItem('token');
+    header.clearHeader();
+    header.render({ color: 'white', isLoggedIn: false, userName: '' });
+    document.querySelector('.button__auth').addEventListener('click', openPopup);
+  }
+
 
   // checkToken() {
   //   localStorage.getItem('token') ? this.isLoggedIn = true : this.isLoggedIn = false;
@@ -458,6 +530,9 @@ const newsCard = new NewsCard();
 const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST,
   SHOWMORE_BUTTON, newsCard, mainApi);
   newsCardList.setEventListener();
+
+
+
 
 
 
@@ -557,6 +632,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       super();
       this.form = document.querySelector('.popup__form');
       this.inputs = [];
+
     }
 
   // getValue() {
@@ -564,6 +640,46 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
   // return this.form.children[0].value;
 
   //   }
+
+  validate(event) {
+const input = event.target;
+const errorMessage = input.closest('div').nextElementSibling;
+
+if (input.validity.valueMissing) {
+  errorMessage.textContent = 'пусто';
+}
+else if(input.name === 'email' && !input.checkValidity()) {
+  errorMessage.textContent = 'почта';
+}
+else if(input.name === 'password' && !input.checkValidity()) {
+  errorMessage.textContent = 'пароль';
+}
+else if(input.name === 'name' && !input.checkValidity()) {
+  errorMessage.textContent = 'имя';
+}
+else{
+  // button.classList.remove('popup__button_disabled');
+
+  document.querySelector('.button__popup').removeAttribute('disabled');
+}
+// this.validateForm();
+}
+
+validateForm() {
+  const formInputs = Array.from(this.form.elements).every((element) => element.checkValidity());
+if (formInputs) {
+  document.querySelector('.button__popup').removeAttribute('disabled');
+}
+else {
+  document.querySelector('.button__popup').setAttribute('disabled');
+}
+}
+
+setValidateListners() {
+  this.inputs.forEach((input) => {
+    input.addEventListener('input', this.validate);
+  });
+}
 
     getInfo() {
       const formData = new FormData(this.form);
@@ -610,13 +726,15 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
     init() {
       this.getInputs();
       this.form = document.querySelector('.popup__form');
-
+      this.setValidateListners();
       this._setHandlers([{
         element: document.querySelector('.button__popup'),
         event: 'click',
         callback: (event) => this.signUp(event),
-      }]);
+      }
+    ]);
     }
+
 
   }
 
@@ -628,6 +746,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       super();
       this.api = api;
       this.header = header;
+
     }
 
     signIn(event) {
@@ -635,6 +754,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       this.api.signin(this.getInfo())
           .then((res) => {
             this.header.render({ color: 'white' , isLoggedIn: true, userName: res.name });
+            localStorage.setItem('token', res.token);
           })
           .catch((err) => {
             console.log(err);
@@ -644,7 +764,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
     init() {
       this.getInputs();
       this.form = document.querySelector('.popup__form');
-
+      this.setValidateListners();
       this._setHandlers([{
         element: document.querySelector('.button__popup'),
         event: 'click',
@@ -657,7 +777,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
   // const searchForm = new Form(SEARCH_FORM);
 
 
-  const searchFormSubmit = async () => {
+  const searchFormSubmit = async (event) => {
     event.preventDefault();
 
     const keyWord = SEARCH_FORM.children[0].value;
@@ -686,26 +806,15 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
   //добавить .nav__item.nav__item_login:nth-of-type(1) {
   //   margin-right: 34px;
   // } для прозрачной темы
+// class Validate extends Form {
+// constructor()
+// }
 
 
 
-
-  const initPage = async () => {
-
-
-    await mainApi.getUserData()
-    .then((res) => {
-      header.render({ isLoggedIn: true, userName: res.name });
-    })
-    .catch(() => {
-      header.render({ isLoggedIn: false, userName: '' });
-    });
-
-    const signUpForm = new FormSignUp(mainApi);
-    const signInForm = new FormSignIn(mainApi, header);
-
-    const popup = new Popup(signUpForm, signInForm);
-
+  const logout = async () => {
+      header.logout();
+    }
 
     const openPopup = async () => {
       popup.setContent(popupSignin);
@@ -714,9 +823,61 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       signInForm.init();
     }
 
-    document.querySelector('.button__auth').addEventListener('click', openPopup);
+  const initPage = async () => {
 
 
+    await mainApi.getUserData()
+    .then((res) => {
+      // localStorage.setItem('token', res.token);
+      header.render({ color: 'white', isLoggedIn: true, userName: res.name });
+    })
+    .catch(() => {
+      header.render({ color: 'white', isLoggedIn: false, userName: '' });
+      localStorage.setItem('token', '');
+    });
+
+    // await mainApi.logout()
+    // .then(() => {
+    //   header.render({ isLoggedIn: false, userName: '' });
+    //   localStorage.setItem('userData', '');
+    //   // cardsContainer.textContent = '';
+    //   // cardsBlock.classList.remove('cards_is-opened');
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
+
+    // mainApi.getArticles()
+    // .then((res) => {
+    //   res.data.forEach(function(item) {
+    //     cardList.addCard(item);
+
+    //   });
+    // });
+
+    const signUpForm = new FormSignUp(mainApi);
+    const signInForm = new FormSignIn(mainApi, header);
+
+    const popup = new Popup(signUpForm, signInForm);
+
+    const logBtn = async (event) => {
+      if(event.target.closest('#btn_auth')) {
+        popup.setContent(popupSignin);
+
+        popup.open();
+        signInForm.init();
+
+
+      }
+      if(event.target.closest('#btn_logout')) {
+        header.logout();
+        window.location.href = '../index.html';
+      }
+    }
+
+    document.querySelector('.button__auth').addEventListener('click', logBtn);
   };
+
+
 
   initPage();

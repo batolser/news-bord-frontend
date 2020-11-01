@@ -27,3 +27,7 @@
   width: 100%;
   margin: 0 auto;
 }
+
+.card__keyword {
+  display: none;
+}

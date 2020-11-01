@@ -13,17 +13,9 @@
 <body>
   <div class="page-wrapper">
     <div class="page">
-        <header id='header-login_black' class="header header__login header__login_light-theme header__active_light-theme">
-          <h1 class="header__logo header__logo_light-theme header__logo_active_light-theme">NewsBord</h1>
-          <div class="menu__button menu__button_light-theme menu__button_close_light-theme"></div>
-          <nav class="nav">
-            <ul class="nav__items">
-              <li class="nav__item nav__item_login nav__item_light-theme"><a class="nav__link nav__link_login" href="index.html">Главная</a></li>
-              <li class="nav__item nav__item_login nav__item_light-theme"><a class="nav__link nav__link_login nav__link_in nav__link_in_light-theme" href="save.html">Сохраненные статьи</a></li>
-              <li class="nav__item nav__item_login nav__item_light-theme"><button class="button button__auth button__auth_login button__auth_light-theme"><p class="nav__login">Грета</p><img class="nav__icon-logout" src="<%=require('./images/logout_black.svg').default%>"alt="icon logout"></button></li>
-            </ul>
-          </nav>
-        </header>
+      <header class="header container__header">
+      </header>
+
         <div class="cover"></div>
 
 
@@ -35,7 +27,7 @@
     <section class="results">
 
         <div class="cards-list cards-list__saved">
-          <a class="card" href="https://nat-geo.ru/nature/natsionalnoe-dostoyanie-parki">
+          <!-- <a class="card" href="https://nat-geo.ru/nature/natsionalnoe-dostoyanie-parki">
             <img class="card__img" src="<%=require('./images/image_08.png').default%>" alt="plants">
             <p class="card__keyword">Природа</p>
             <div class="card__top">
@@ -106,7 +98,7 @@
               </div>
               <p class="card__source">Лента.ру</p>
             </div>
-          </a>
+          </a> -->
         </div>
 
     </section>
@@ -121,6 +113,21 @@
         <a class="footer__social" href="https://www.facebook.com/batolser"><img class="social" src="<%=require('./images/fb.svg').default%>" alt="fb icon"></a>
       </div>
     </footer>
+
+
+    <template id='header-login_black' class="header header__login header__login_light-theme header__active_light-theme">
+      <h1 class="header__logo header__logo_light-theme header__logo_active_light-theme">NewsBord</h1>
+      <div class="menu__button menu__button_light-theme menu__button_close_light-theme"></div>
+      <nav class="nav">
+        <ul class="nav__items">
+          <li class="nav__item nav__item_login nav__item_light-theme"><a class="nav__link nav__link_login" href="index.html">Главная</a></li>
+          <li class="nav__item nav__item_login nav__item_light-theme"><a class="nav__link nav__link_login nav__link_in nav__link_in_light-theme" href="save.html">Сохраненные статьи</a></li>
+          <li class="nav__item nav__item_login nav__item_light-theme"><button id='btn_logout' class="button button__auth button__auth_login button__auth_light-theme"><p class="nav__login">Грета</p><img class="nav__icon-logout" src="<%=require('./images/logout_black.svg').default%>"alt="icon logout"></button></li>
+        </ul>
+      </nav>
+    </template>
+
+
     </div>
   </div>
   <script src="<%= htmlWebpackPlugin.files.chunks.saved_articles.entry %>"></script>
