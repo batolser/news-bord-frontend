@@ -8,7 +8,7 @@
   <meta name="author" content="Baturova Olga">
   <title>NewsBord</title>
   <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
-  <link rel="stylesheet" href="style/main.3ef9287e18018ded6f59.css">
+  <link rel="stylesheet" href="style/main.559006591478e579faaa.css">
 </head>
 <body>
   <div class="page-wrapper">
@@ -137,18 +137,18 @@
         <!-- <template id="popup-signin" class="popup popup__singin"> -->
     <template id='popup-signin'>
         <h3 class="popup__title">Вход</h3>
-        <form class="popup__form" name="singin">
+        <form class="popup__form" name="singin" novalidate>
           <div class="popup__item">
             <label class="popup__field">
               Email
-              <input type="email" name="email" class="popup__input" placeholder="Введите почту" required>
+              <input type="email" name="email" class="popup__input" required>
             </label>
           </div>
           <div class="popup__input popup__input_error"><p class="popup__error">Oib,rf</p></div>
           <div class="popup__item">
             <label class="popup__field">
               Пароль
-              <input type="password" name="password" class="popup__input" placeholder="Введите пароль" required minlength='8'>
+              <input type="password" name="password" minlength="8" maxlength="30" class="popup__input" required>
             </label>
           </div>
           <div class="popup__input popup__input_error"><p class="popup__error">Ошибка</p></div>
@@ -165,25 +165,25 @@
     <template id='popup-signup'>
       <!-- <img class="popup__close" src="./images/close.svg" alt="close popup"> -->
       <h3 class="popup__title">Регистрация</h3>
-      <form class="popup__form" name="signup">
+      <form class="popup__form" name="signup" novalidate>
         <div class="popup__item">
           <label class="popup__field">
             Email
-            <input type="email" name="email" class="popup__input" placeholder="Введите почту" required>
+            <input type="email" name="email" class="popup__input" required>
           </label>
         </div>
         <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
         <div class="popup__item">
           <label class="popup__field">
             Пароль
-            <input type="password" name="password" class="popup__input" placeholder="Введите пароль" required minlength='8'>
+            <input type="password" name="password"  minlength="8" maxlength="30" class="popup__input" required>
           </label>
         </div>
         <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
         <div class="popup__item">
           <label class="popup__field">
             Имя
-            <input type="text" name="name" class="popup__input" placeholder="Введите своё имя" required minlength='2' maxlength='30'>
+            <input type="text" name="name"  minlength="2" maxlength="30"class="popup__input" required>
           </label>
         </div>
         <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
@@ -197,14 +197,14 @@
     </template>
 
     <template id='popup-ok'>
-      <div class="popup__content popup__content_ok">
-        <img class="popup__close" src="./images/close.svg" alt="close popup">
+      <!-- <div class="popup__content popup__content_ok">
+        <img class="popup__close" src="./images/close.svg" alt="close popup"> -->
         <h3 class="popup__title popup__title_ok">Пользователь успешно зарегистрирован!</h3>
         <button type="button" class="popup__option">
           <span class="popup__option popup__option_span"></span>
           Выполнить вход
         </button>
-      </div>
+      <!-- </div> -->
     </template>
 
     <template id='header-login_white' class="header header__login">
@@ -214,7 +214,7 @@
         <ul class="nav__items">
           <li class="nav__item"><a class="nav__link nav__link_in" href="index.html">Главная</a></li>
           <li class="nav__item"><a class="nav__link" href="save.html">Сохраненные статьи</a></li>
-          <li class="nav__item"><button class="button button__auth button__auth_login"><p class="nav__login">Грета</p><img class="nav__icon-logout" src="./images/logout.svg" alt="icon logout"></button></li>
+          <li class="nav__item"><button id='btn_logout'class="button button__auth button__auth_login"><p class="nav__login">Грета</p><img class="nav__icon-logout" src="./images/logout.svg" alt="icon logout"></button></li>
         </ul>
       </nav>
    </template>
@@ -225,7 +225,7 @@
       <nav class="nav">
         <ul class="nav__items">
           <li class="nav__item"><a class="nav__link nav__link_in" href="index.html">Главная</a></li>
-          <li class="nav__item"><button class="button button__auth">Авторизоваться</button></li>
+          <li class="nav__item"><button id='btn_auth' class="button button__auth">Авторизоваться</button></li>
         </ul>
       </nav>
     </template>
@@ -243,7 +243,7 @@
     </footer>
     </div>
   </div>
-  <script src="js/main.c05e4ccc9c2238d023a6.js"></script>
+  <script src="js/main.615ec17d29c31c2c49aa.js"></script>
 
 </body>
 </html>
