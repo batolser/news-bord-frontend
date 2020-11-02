@@ -38,7 +38,7 @@
         <p class="loading__text">Идет поиск новостей...</p>
       </div>
       <!-- убрать класс loading_disactive для вызова блока-->
-      <div class="loading loading_disactive">
+      <div class="loading loading__nothing loading_disactive">
         <img class="nothing" src="./images/not-found_v1.svg" alt="search nothing">
         <h5 class="loading__title">Ничего не найдено</h5>
         <p class="loading__text loading__text_nothing">К сожалению по вашему запросу ничего не найдено.</p>
@@ -144,14 +144,14 @@
               <input type="email" name="email" class="popup__input" required>
             </label>
           </div>
-          <div class="popup__input popup__input_error"><p class="popup__error">Oib,rf</p></div>
+          <div class="popup__input popup__input_error popup__error"></div>
           <div class="popup__item">
             <label class="popup__field">
               Пароль
               <input type="password" name="password" minlength="8" maxlength="30" class="popup__input" required>
             </label>
           </div>
-          <div class="popup__input popup__input_error"><p class="popup__error">Ошибка</p></div>
+          <div class="popup__input popup__input_error popup__error"></div>
           <button class="button button__popup" disabled>Войти</button>
         </form>
         <button type="button" class="popup__option" id="toSignUp">
@@ -172,22 +172,22 @@
             <input type="email" name="email" class="popup__input" required>
           </label>
         </div>
-        <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
+        <div class="popup__input popup__input_error popup__error"></div>
         <div class="popup__item">
           <label class="popup__field">
             Пароль
             <input type="password" name="password"  minlength="8" maxlength="30" class="popup__input" required>
           </label>
         </div>
-        <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
+        <div class="popup__input popup__input_error popup__error"></div>
         <div class="popup__item">
           <label class="popup__field">
             Имя
             <input type="text" name="name"  minlength="2" maxlength="30"class="popup__input" required>
           </label>
         </div>
-        <div class="popup__input popup__input_error"><p class="popup__error"></p></div>
-        <div class="popup__input popup__input_error popup__input_error_inique"><p class="popup__error popup__error_inique">Такой пользователь уже есть</p></div>
+        <div class="popup__input popup__input_error popup__error"></div>
+        <div class="popup__input popup__input_error popup__input_error_inique popup__error popup__error_inique"></div>
         <button class="button button__popup" disabled>Зарегистрироваться</button>
       </form>
       <button type="button" class="popup__option" id="toSignIn">
@@ -200,7 +200,7 @@
       <!-- <div class="popup__content popup__content_ok">
         <img class="popup__close" src="./images/close.svg" alt="close popup"> -->
         <h3 class="popup__title popup__title_ok">Пользователь успешно зарегистрирован!</h3>
-        <button type="button" class="popup__option">
+        <button type="button" class="popup__option popup__option_ok" id="toSignIn">
           <span class="popup__option popup__option_span"></span>
           Выполнить вход
         </button>
@@ -243,7 +243,7 @@
     </footer>
     </div>
   </div>
-  <script src="js/main.615ec17d29c31c2c49aa.js"></script>
+  <script src="js/main.1beec5b54b0458f4f1e2.js"></script>
 
 </body>
 </html>
