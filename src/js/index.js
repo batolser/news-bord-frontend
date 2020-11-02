@@ -101,6 +101,7 @@ class NewsApi {
         return Promise.reject('По запросу ничего найдено');
       })
       .catch((err) => Promise.reject(err));
+
   }
 
 
@@ -128,9 +129,7 @@ class MainApi {
         name,
       }),
     })
-    .catch(err => {
-      console.log(err);
-    })
+    .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
     }
 
 
@@ -154,9 +153,7 @@ class MainApi {
       }
       return res.json();
     })
-    .catch(err => {
-      console.log(err);
-    })
+    .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
 
     }
 
@@ -176,9 +173,7 @@ class MainApi {
       }
       return res.json();
     })
-    .catch(err => {
-      console.log(err);
-    })
+    .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
   }
 
 
@@ -207,9 +202,7 @@ class MainApi {
     .then((res) => {
       return res.json();
     })
-    .catch(err => {
-      console.log(err);
-    })
+    .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
   }
 
   removeArticle(articleId) {
@@ -223,9 +216,7 @@ class MainApi {
   .then((res) => {
     return res.json();
   })
-  .catch(err => {
-    console.log(err);
-  })
+  .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
 }
 
 getArticles() {
@@ -238,9 +229,7 @@ getArticles() {
   .then((res) => {
     return res.json();
   })
-  .catch(err => {
-    console.log(err);
-  })
+  .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
 }
 
 }
@@ -396,6 +385,13 @@ super();
     }
   }
 
+  clearCardList() {
+
+    const CardListArray = document.querySelectorAll('.card');
+    CardListArray.forEach(function(item) {
+      item.parentNode.removeChild(item);
+    });
+  }
 
   setEventListener() {
     this._showMoreButton.addEventListener('click', this._showMore.bind(this));
@@ -407,7 +403,8 @@ super();
   toggleMark(event) {
 
     if (event.target.classList.contains('card__icon_bookmark')) {
-      if(!this.api.isLoggedIn){
+      if(this.api.isLoggedIn){
+        event.preventDefault();
         const cardArticle = event.target.closest('.card');
         const article = [];
         article.keyword = cardArticle.querySelector('.card__keyword').textContent;
@@ -421,20 +418,24 @@ super();
         // event.preventDefault();
         this.api.createArticle(article)
         .then((res) => {
+
           cardArticle.setAttribute('data-id', res.data._id);
           cardArticle.querySelector('.card__icon_bookmark').classList.add('card__icon_ok');
 
 
         })
-          .catch((err) => {
-            console.log(err);
-          })
+        .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
       }
-
+      else if(!this.api.isLoggedIn) {
+        event.preventDefault();
+        event.target.previousSibling.classList.remove('card__tag_disactive');
+      }
       }
       if(event.target.classList.contains('card__icon_trash')) {
+        event.preventDefault();
       const articleId = event.target.closest('.card').dataset.id;
       this.api.removeArticle(articleId);
+      event.target.closest('.card').querySelector('.card__icon').classList.add('card__icon_ok');
       //перерисовать выведенные карточки
       }
     }
@@ -498,6 +499,7 @@ class Header extends BaseComponent{
       const clone = template.cloneNode(true).content;
       const name = clone.querySelector('.nav__login');
       name.textContent = props.userName;
+      // document.querySelector('.saved__title_login').textContent = props.userName;
       containerHeader.appendChild(clone);
       document.querySelector('.button__auth').addEventListener('click', logout);
     } else if (!props.isLoggedIn) {
@@ -536,96 +538,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
 
 
 
-  class Popup extends BaseComponent {
-    constructor(signUpForm, signInForm) {
-      super();
-      // this.popup = popup;
-      // this.content = content;
-      // this.closePop = this.popup.closePop;
-      this.signUpForm = signUpForm;
-      this.signInForm = signInForm;
-      this.handlers = [
-        { element: document.querySelector('.popup__close'), event: 'click', callback: () => this.close() }
-        // { element: document.querySelector('.button__auth'), event: 'click', callback: () => this.open() }
-      ];
-    }
 
-    setContent(template) {
-
-      popupContent.appendChild(template.cloneNode(true).content);
-
-      this.handlers.push({
-        element: document.querySelector('.popup__option'),
-        event: 'click',
-        callback: (e) => this.setOpenNewPopup(e),
-      });
-
-
-      this._setHandlers(this.handlers);
-    }
-
-    clearContent() {
-      const popupTitle = popupContent.querySelector('.popup__title');
-      const popupForm = popupContent.querySelector('.popup__form');
-      const popupOption = popupContent.querySelector('.popup__option');
-
-      if (popupTitle) popupContent.removeChild(popupContent.querySelector('.popup__title'));
-      if (popupForm) popupContent.removeChild(popupContent.querySelector('.popup__form'));
-      if (popupOption) popupContent.removeChild(popupContent.querySelector('.popup__option'));
-    }
-
-    open() {
-      mainPopup.classList.toggle('popup_is-opened');
-      // this.setContent();
-      }
-
-    close() {
-      mainPopup.classList.remove('popup_is-opened');
-      this.clearContent();
-      }
-
-    setOpenNewPopup (e) {
-        if (e.target.id === 'toSignUp') {
-          this.clearContent();
-          this.setContent(popupSignup);
-          this.signInForm.removeListeners();
-          this.signUpForm.init();
-        } else if (e.target.id === 'toSignIn') {
-          this.clearContent();
-          this.setContent(popupSignin);
-          this.signUpForm.removeListeners();
-          this.signInForm.init();
-      }
-    }
-
-
-  }
-
-  class PopupOk extends Popup {
-    constructor() {
-      super();
-      this.handlers = [
-        { element: document.querySelector('.popup__close'), event: 'click', callback: () => this.close() }
-        // { element: document.querySelector('.button__auth'), event: 'click', callback: () => this.open() }
-      ];
-    }
-
-    setOpenOkPopup () {
-      this.clearContent();
-      this.setContent(popupOk);
-
-      this.handlers.push({
-        element: document.querySelector('.popup__option'),
-        event: 'click',
-        callback: (e) => this.setOpenNewPopup(e),
-      });
-
-      this._setHandlers(this.handlers);
-    }
-
-  }
-
-  const openPopupOk = new PopupOk();
 
   class Form extends BaseComponent {
     constructor() {
@@ -646,16 +559,16 @@ const input = event.target;
 const errorMessage = input.closest('div').nextElementSibling;
 
 if (input.validity.valueMissing) {
-  errorMessage.textContent = 'пусто';
+  errorMessage.textContent = 'Заполните поле';
 }
 else if(input.name === 'email' && !input.checkValidity()) {
-  errorMessage.textContent = 'почта';
+  errorMessage.textContent = 'Введите email';
 }
 else if(input.name === 'password' && !input.checkValidity()) {
-  errorMessage.textContent = 'пароль';
+  errorMessage.textContent = 'Введите пароль';
 }
 else if(input.name === 'name' && !input.checkValidity()) {
-  errorMessage.textContent = 'имя';
+  errorMessage.textContent = 'Введите имя';
 }
 else{
   // button.classList.remove('popup__button_disabled');
@@ -718,9 +631,7 @@ setValidateListners() {
         .then(() => {
           openPopupOk.setOpenOkPopup();
         })
-        .catch((err) => {
-          console.log(err);
-        })
+        .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
     }
 
     init() {
@@ -753,12 +664,12 @@ setValidateListners() {
       event.preventDefault();
       this.api.signin(this.getInfo())
           .then((res) => {
+            this.api.isLoggedIn = true;
             this.header.render({ color: 'white' , isLoggedIn: true, userName: res.name });
             localStorage.setItem('token', res.token);
+            mainPopup.classList.remove('popup_is-opened');
           })
-          .catch((err) => {
-            console.log(err);
-          })
+          .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
         };
 
     init() {
@@ -774,27 +685,139 @@ setValidateListners() {
 
   }
 
-  // const searchForm = new Form(SEARCH_FORM);
+  const signUpForm = new FormSignUp(mainApi);
+  const signInForm = new FormSignIn(mainApi, header);
 
+  // const searchForm = new Form(SEARCH_FORM);
+  class Popup extends BaseComponent {
+    constructor(signUpForm, signInForm) {
+      super();
+      // this.popup = popup;
+      // this.content = content;
+      // this.closePop = this.popup.closePop;
+      this.signUpForm = signUpForm;
+      this.signInForm = signInForm;
+      this.handlers = [
+        { element: document.querySelector('.popup__close'), event: 'click', callback: () => this.close() }
+        // { element: document.querySelector('.button__auth'), event: 'click', callback: () => this.open() }
+      ];
+    }
+
+    setContent(template) {
+
+      popupContent.appendChild(template.cloneNode(true).content);
+
+      this.handlers.push({
+        element: document.querySelector('.popup__option'),
+        event: 'click',
+        callback: (e) => this.setOpenNewPopup(e),
+      });
+
+
+      this._setHandlers(this.handlers);
+    }
+
+    clearContent() {
+      const popupTitle = popupContent.querySelector('.popup__title');
+      const popupForm = popupContent.querySelector('.popup__form');
+      const popupOption = popupContent.querySelector('.popup__option');
+
+      if (popupTitle) popupContent.removeChild(popupContent.querySelector('.popup__title'));
+      if (popupForm) popupContent.removeChild(popupContent.querySelector('.popup__form'));
+      if (popupOption) popupContent.removeChild(popupContent.querySelector('.popup__option'));
+    }
+
+    open() {
+      mainPopup.classList.toggle('popup_is-opened');
+      // this.setContent();
+      }
+
+    close() {
+      mainPopup.classList.remove('popup_is-opened');
+      this.clearContent();
+      }
+
+    setOpenNewPopup (e) {
+        if (e.target.id === 'toSignUp') {
+          this.clearContent();
+          this.setContent(popupSignup);
+          // this.signInForm.removeListeners();
+          this.signUpForm.init();
+        } else if (e.target.id === 'toSignIn') {
+          this.clearContent();
+          this.setContent(popupSignin);
+          // this.signUpForm.removeListeners();
+          signInForm.init();
+      }
+
+    }
+
+
+  }
+
+  const popup = new Popup(signUpForm, signInForm);
+
+  class PopupOk extends Popup {
+    constructor() {
+      super();
+      this.handlers = [
+        { element: document.querySelector('.popup__close'), event: 'click', callback: () => this.close() }
+        // { element: document.querySelector('.button__auth'), event: 'click', callback: () => this.open() }
+      ];
+    }
+
+    setOpenOkPopup () {
+      this.clearContent();
+      this.setContent(popupOk);
+
+      this.handlers.push({
+        element: document.querySelector('.popup__option'),
+        event: 'click',
+        callback: (e) => setOpenNewPopup(e),
+      });
+
+      this._setHandlers(this.handlers);
+    }
+
+  }
+
+  const openPopupOk = new PopupOk();
 
   const searchFormSubmit = async (event) => {
     event.preventDefault();
+    newsCardList.clearCardList();
+
+    document.querySelector('.results').classList.remove('results_disactive');
+    document.querySelector('.loading').classList.remove('loading_disactive');
 
     const keyWord = SEARCH_FORM.children[0].value;
 
       newsApi.getNews(keyWord)
         .then((res) => {
           if (res.articles.length !== 0) {
+            document.querySelector('.results').classList.add('results_disactive');
+    document.querySelector('.loading').classList.add('loading_disactive');
             newsCardList.setArticlesArray(res.articles, keyWord);
             newsCardList.renderResults();
 
           }
+          else if ((res.articles.length === 0)) {
+            document.querySelector('.results').classList.remove('results_disactive');
+    document.querySelector('.loading__nothing').classList.remove('loading_disactive');
+
+          }
         })
         .catch((err) => {
-          console.log(err);
+
+          document.querySelector('.loading').classList.add('loading_disactive');
+    document.querySelector('.loading__nothing').classList.remove('loading_disactive');
+
+        console.error(`Произошла ошибка: "${err.message}"`)
         })
 
-      SEARCH_FORM.reset();
+
+        SEARCH_FORM.children[0].value = '';
+
 
   };
 
@@ -809,19 +832,18 @@ setValidateListners() {
 // class Validate extends Form {
 // constructor()
 // }
+const openPopup = async () => {
+  popup.setContent(popupSignin);
 
+  popup.open();
+  signInForm.init();
+}
 
 
   const logout = async () => {
       header.logout();
     }
 
-    const openPopup = async () => {
-      popup.setContent(popupSignin);
-
-      popup.open();
-      signInForm.init();
-    }
 
   const initPage = async () => {
 
@@ -829,13 +851,15 @@ setValidateListners() {
     await mainApi.getUserData()
     .then((res) => {
       // localStorage.setItem('token', res.token);
+      mainApi.isLoggedIn = true;
       header.render({ color: 'white', isLoggedIn: true, userName: res.name });
+
     })
     .catch(() => {
+      mainApi.isLoggedIn = false;
       header.render({ color: 'white', isLoggedIn: false, userName: '' });
       localStorage.setItem('token', '');
     });
-
     // await mainApi.logout()
     // .then(() => {
     //   header.render({ isLoggedIn: false, userName: '' });
@@ -855,10 +879,9 @@ setValidateListners() {
     //   });
     // });
 
-    const signUpForm = new FormSignUp(mainApi);
-    const signInForm = new FormSignIn(mainApi, header);
 
-    const popup = new Popup(signUpForm, signInForm);
+
+
 
     const logBtn = async (event) => {
       if(event.target.closest('#btn_auth')) {
@@ -876,6 +899,10 @@ setValidateListners() {
     }
 
     document.querySelector('.button__auth').addEventListener('click', logBtn);
+// document.querySelector('.popup__option_ok').addEventListener('click', openPopup);
+
+
+
   };
 
 

@@ -364,11 +364,24 @@ super();
     this.chunk = 3;
     this.newsCard = newsCard;
     this.api = api;
+    this.allCards = [];
     // this.handlers = [
     //   { element: document.querySelector('.card__icon_bookmark'), event: 'click', callback: () => addArticles() }
     // ];
 
   }
+  countKeywords() {
+    this.keywords = {};
+    this.allCards.forEach((item) => {
+      if (!this.keywords[item.keyword]) {
+        this.keywords[item.keyword] = 1;
+      } else {
+        this.keywords[item.keyword] += 1;
+      }
+    })
+    return this.keywords;
+  }
+
 
   setArticlesArray(articles, keyWord) {
     this.keyWord = keyWord;
@@ -408,6 +421,13 @@ super();
     }
   }
 
+  clearCardList() {
+
+    const CardListArray = document.querySelectorAll('.card');
+    CardListArray.forEach(function(item) {
+      item.parentNode.removeChild(item);
+    });
+  }
 
   setEventListener() {
     this._showMoreButton.addEventListener('click', this._showMore.bind(this));
@@ -420,6 +440,7 @@ super();
 
     if (event.target.classList.contains('card__icon_bookmark')) {
       if(!this.api.isLoggedIn){
+        event.preventDefault();
         const cardArticle = event.target.closest('.card');
         const article = [];
         article.keyword = document.querySelector('.card__keyword').textContent;
@@ -445,10 +466,10 @@ super();
 
       }
       if(event.target.classList.contains('card__icon_trash')) {
-
+        event.preventDefault();
       const articleId = event.target.closest('.card').dataset.id;
       this.api.removeArticle(articleId);
-
+      event.target.closest('.card').querySelector('.card__icon').classList.add('card__icon_ok');
       //перерисовать выведенные карточки
       }
     }
@@ -533,6 +554,7 @@ class Header extends BaseComponent{
         : headerLoginBlack;
       const clone = template.cloneNode(true).content;
       const name = clone.querySelector('.nav__login');
+      document.querySelector('.saved__title_login').textContent = props.userName;
       name.textContent = props.userName;
       containerHeader.appendChild(clone);
       document.querySelector('.button__auth').addEventListener('click', logout);
@@ -567,9 +589,62 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
   SHOWMORE_BUTTON, newsCard, mainApi);
   // newsCardList.setEventListener();
 
+  const KEYWORDS_ALL = document.getElementById("keywords__all");
+  const KEYWORD_1 = document.getElementById("keyword__1");
+  const KEYWORD_2 = document.getElementById("keyword__2");
+  const KEYWORD_OTHERS = document.getElementById("keywords__others");
 
 
+  class KeyWordsCounter {
+  constructor(keywords_all, keyword_1, keyword_2, keywords_others){
+this.keywords_all = keywords_all;
+this.keyword_1 = keyword_1;
+this.keyword_2 = keyword_2;
+this.keywords_others = keywords_others;
+  }
 
+  sortKeywords(keywords){
+    const arr = [];
+    for (let item in keywords) {
+      arr.push([item], keywords[item])
+    }
+
+    arr.sort(function(a, b) {
+      return b[1] - a[1];
+    })
+    return arr;
+  }
+
+  renderKeyWords(allArticles, sortedKeywords) {
+    let keywords;
+    if (0 < sortedKeywords.length && sortedKeywords.length <= 3) {
+      keywords = sortedKeywords.slice(0, 3);
+    } else if (sortedKeywords.length > 3) {
+      keywords = [sortedKeywords[0], sortedKeywords[1], sortedKeywords.length - 2];
+    }
+    this.keywords_all.textContent = allArticles;
+    if (!keywords) return document.querySelector('.saved__title').textContent = '';
+    if (keywords.length === 1) {
+      this.keyword_1.textContent = keywords[0][0];
+      this.keyword_2.textContent = '';
+      this.keywords_others.textContent = '';
+    } else if (keywords.length === 2) {
+      this.keyword_1.textContent = keywords[0][0];
+      this.keyword_2.textContent = ` и ${keywords[1][0]}`;
+      this.keywords_others.textContent = '';
+    } else if (keywords.length === 3 && keywords[2].length > 1) {
+      this.keyword_1.textContent = keywords[0][0];
+      this.keyword_2.textContent = `, ${keywords[1][0]}`;
+      this.keywords_others.textContent = ` и ${keywords[2][0]}`;
+    } else {
+      this.keyword_1.textContent = keywords[0][0];
+      this.keyword_2.textContent = `, ${keywords[1][0]}`;
+      this.keywords_others.textContent = ` и ${keywords[2]} другим`;
+    }
+  }
+}
+
+const keyWordsCounter = new KeyWordsCounter(KEYWORDS_ALL, KEYWORD_1, KEYWORD_2, KEYWORD_OTHERS);
 
 
   // class Popup extends BaseComponent {
@@ -819,6 +894,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
     await mainApi.getUserData()
     .then((res) => {
       // localStorage.setItem('token', res.token);
+      mainApi.isLoggedIn = true;
       header.render({ color: 'black', isLoggedIn: true, userName: res.name });
 
     })
@@ -870,12 +946,20 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       await mainApi.getArticles()
       .then((res) => {
         res.data.forEach(function(item) {
-          newsCardList.addCard(item);
+
+          newsCardList.allCards = res.data;
+        const allArticles = res.data.length;
+        const sortedKeywords = keyWordsCounter.sortKeywords(newsCardList.countKeywords());
+        keyWordsCounter.renderKeyWords(allArticles, sortedKeywords);
+        newsCardList.addCard(item);
         })
 
         // document.querySelector('.cards-list').addEventListener('click', newsCardList.toggleMark.bind(newsCardList));
 
       })
+      // .then((res) => {
+
+      // })
       .then((res) => {
           let cards = document.querySelectorAll('.card__icon');
           // .querySelector('.card__icon').classList.remove('card__icon_bookmark');
@@ -884,14 +968,6 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       cards.forEach(function(item) {
         item.classList.remove('card__icon_bookmark');
         item.classList.add('card__icon_trash');
-
-
-        // item.setAttribute('data-id', res.data._id);
-
-
-
-
-
 })
       }
       )
