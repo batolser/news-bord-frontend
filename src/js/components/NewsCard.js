@@ -36,10 +36,10 @@ export default class NewsCard {
 
 
 
-    card.setAttribute('href', cardData.url || cardData.link || '../../index.html');
+    card.setAttribute('href', cardData.url || cardData.link || 'index.html');
     card.setAttribute('target', '_blank');
     card.setAttribute('data-id', cardData._id || undefined);
-    cardImage.setAttribute('src', cardData.urlToImage || cardData.image || '../../images/image-not-found.jpg');
+    cardImage.setAttribute('src', cardData.urlToImage || cardData.image || './src/images/image-not-found.jpg');
     cardImage.setAttribute('alt', 'Картинка');
     cardKeyword.textContent = cardData.keyword || keyWord;
     cardTag.textContent = 'Войдите, чтобы сохранять статьи';
