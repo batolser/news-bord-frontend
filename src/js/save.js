@@ -49,10 +49,11 @@ const keyWordsCounter = new KeyWordsCounter(KEYWORDS_ALL, KEYWORD_1, KEYWORD_2, 
 
     })
     .catch(() => {
-      header.render({ color: 'white', isLoggedIn: false, userName: '' });
-      localStorage.setItem('token', '');
       window.location.href = 'index.html';
-      setTimeout(document.location.href = "index.html",500);
+      // setTimeout(document.location.href = "index.html",500);
+      // header.render({ color: 'white', isLoggedIn: false, userName: '' });
+      // localStorage.setItem('token', '');
+
     });
 
     // await mainApi.logout()

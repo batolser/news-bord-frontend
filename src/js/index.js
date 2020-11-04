@@ -154,7 +154,6 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       }
       if(event.target.closest('#btn_logout')) {
         header.logout();
-        setTimeout(function(){document.location.href = "index.html";},500);
         window.location.href = 'index.html';
       }
     }
