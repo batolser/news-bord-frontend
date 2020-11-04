@@ -1,6 +1,6 @@
 export default class MainApi {
   constructor() {
-    this._mainURL = 'http://api.news-bord.students.nomoreparties.co';
+    this._mainURL = 'http://localhost:3000';
     this.isLoggedIn = false;
   }
 
@@ -94,7 +94,7 @@ export default class MainApi {
   }
 
   removeArticle(articleId) {
-    return fetch(`${this._mainURL}/articles`+articleId, {
+    return fetch(`${this._mainURL}/articles/${articleId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

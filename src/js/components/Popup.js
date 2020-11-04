@@ -1,6 +1,15 @@
 import BaseComponent from './BaseComponent';
 import constants from '../constants/constants';
-const { mainPopup, popupContent, popupSignin, popupSignup } = constants;
+const { mainPopup, popupContent, popupSignin, popupSignup, popupOk } = constants;
+
+
+
+import FormSignIn from './FormSignIn';
+const signInForm = new FormSignIn(mainApi, header);
+import MainApi from '../api/MainApi';
+const mainApi = new MainApi ();
+import Header from './Header';
+const header = new Header({ color: 'white' });
 
 export default class Popup extends BaseComponent {
   constructor(signUpForm, signInForm) {
@@ -51,14 +60,36 @@ export default class Popup extends BaseComponent {
   setOpenNewPopup (e) {
       if (e.target.id === 'toSignUp') {
         this.clearContent();
+        this.removeListeners();
         this.setContent(popupSignup);
         this.signUpForm.init();
       } else if (e.target.id === 'toSignIn') {
         this.clearContent();
+        this.removeListeners();
         this.setContent(popupSignin);
-        signInForm.init();
+        this.signInForm.init();
     }
+    else if (e.target.id === 'goToSignIn') {
+      this.clearContent();
+      this.removeListeners();
+      this.setContent(popupSignin);
+      signInForm.init();
+  }
 
+  }
+
+  setOpenOkPopup () {
+    this.clearContent();
+    this.removeListeners();
+    this.setContent(popupOk);
+
+    this.handlers.push({
+      element: document.querySelector('.popup__option'),
+      event: 'click',
+      callback: (e) => setOpenNewPopup(e),
+    });
+
+    this._setHandlers(this.handlers);
   }
 
 

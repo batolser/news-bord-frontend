@@ -21,10 +21,11 @@ export default class FormSignIn extends Form {
           mainPopup.classList.remove('popup_is-opened');
         })
         .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
-      };
+      }
 
   init() {
     this.getInputs();
+    this.removeListeners();
     this.form = document.querySelector('.popup__form');
     this.setValidateListners();
     this._setHandlers([{

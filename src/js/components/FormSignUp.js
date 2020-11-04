@@ -1,7 +1,7 @@
 import Form from './Form';
-import PopupOk from './PopupOk';
+import Popup from './Popup';
 
-const openPopupOk = new PopupOk();
+const openPopupOk = new Popup();
 
 export default class FormSignUp extends Form {
   constructor(api) {
@@ -32,6 +32,7 @@ export default class FormSignUp extends Form {
 
   init() {
     this.getInputs();
+    this.removeListeners();
     this.form = document.querySelector('.popup__form');
     this.setValidateListners();
     this._setHandlers([{

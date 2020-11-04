@@ -27,19 +27,22 @@ errorMessage.textContent = 'Введите имя';
 else{
 
 document.querySelector('.button__popup').removeAttribute('disabled');
+document.querySelector('.button__popup').classList.add('button__popup_active');
+}
+// this.validateForm();
 }
 
-}
+// validateForm() {
+// const formInputs = Array.from(this.form.elements).every((element) => element.checkValidity());
+// if (formInputs) {
+// document.querySelector('.button__popup').removeAttribute('disabled');
+// document.querySelector('.button__popup').classList.add('button__popup_active');
 
-validateForm() {
-const formInputs = Array.from(this.form.elements).every((element) => element.checkValidity());
-if (formInputs) {
-document.querySelector('.button__popup').removeAttribute('disabled');
-}
-else {
-document.querySelector('.button__popup').setAttribute('disabled');
-}
-}
+// }
+// else {
+// document.querySelector('.button__popup').setAttribute('disabled');
+// }
+// }
 
 setValidateListners() {
 this.inputs.forEach((input) => {

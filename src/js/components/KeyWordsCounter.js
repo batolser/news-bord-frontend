@@ -9,11 +9,11 @@ this.keywords_others = keywords_others;
   sortKeywords(keywords){
     const arr = [];
     for (let item in keywords) {
-      arr.push([item], keywords[item])
+      arr.push([item])
     }
 
     arr.sort(function(a, b) {
-      return b[1] - a[1];
+      return a[1] - b[1];
     })
     return arr;
   }
@@ -26,7 +26,7 @@ this.keywords_others = keywords_others;
       keywords = [sortedKeywords[0], sortedKeywords[1], sortedKeywords.length - 2];
     }
     this.keywords_all.textContent = allArticles;
-    if (!keywords) return document.querySelector('.saved__title').textContent = '';
+    
     if (keywords.length === 1) {
       this.keyword_1.textContent = keywords[0][0];
       this.keyword_2.textContent = '';

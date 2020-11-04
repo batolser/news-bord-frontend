@@ -27,7 +27,13 @@ export default class Header extends BaseComponent{
       const name = clone.querySelector('.nav__login');
       name.textContent = props.userName;
       containerHeader.appendChild(clone);
-      document.querySelector('.button__auth').addEventListener('click', logout);
+
+      this._setHandlers([{
+        element: document.querySelector('.button__auth'),
+        event: 'click',
+        callback: (event) => this.logout(event),
+      }]);
+
     } else if (!props.isLoggedIn) {
       const clone = headerLogout.cloneNode(true).content;
       containerHeader.appendChild(clone);
@@ -40,8 +46,10 @@ export default class Header extends BaseComponent{
   logout() {
 
     localStorage.removeItem('token');
-    header.clearHeader();
-    header.render({ color: 'white', isLoggedIn: false, userName: '' });
+    this.clearHeader();
+    this.render({ color: 'white', isLoggedIn: false, userName: '' });
+    window.location.href = 'index.html';
+    setTimeout(function(){document.location.href = "index.html";},500);
     document.querySelector('.button__auth').addEventListener('click', openPopup);
   }
 

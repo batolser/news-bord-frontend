@@ -6,40 +6,16 @@ import Header from './components/Header';
 import FormSignUp from './components/FormSignUp';
 import FormSignIn from './components/FormSignIn';
 import Popup from './components/Popup';
-// import { PopupOk } from './js/components/PopupOk';
+// import PopupOk from './components/PopupOk';
 import NewsCard from './components/NewsCard';
 import NewsCardList from './components/NewsCardList';
+
 import constants from './constants/constants';
+
+
+
 const { popupSignin, RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST, SHOWMORE_BUTTON, SEARCH_FORM } = constants;
 
-const MONTHS = [
-  'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля',
-  'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
-];
-
-  function cardDate(dateObj) {
-    const day = dateObj.getDate();
-    const month = dateObj.getMonth();
-    const year = dateObj.getFullYear();
-    return `${day} ${MONTHS[month]}, ${year}`;
-  }
-
-  function apiDate(dateObj) {
-    const day = dateObj.getDate().toString().padStart(2, '0');
-    const month = (1 + dateObj.getMonth()).toString().padStart(2, '0');
-    const year = dateObj.getFullYear();
-    return `${year}-${month}-${day}`;
-  }
-
-  function nthDaysAgoFromDate(dateObj, days) {
-    const daysMs = 1000 * 60 * 60 * 24 * days;
-    const sevenDaysObj = new Date(Date.parse(dateObj) - daysMs);
-    return apiDate(sevenDaysObj);
-  }
-
-  const DATE_FORMATTERS = {
-    cardDate, apiDate, nthDaysAgoFromDate,
-  };
 
 
 
@@ -70,7 +46,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
   const searchFormSubmit = async (event) => {
     event.preventDefault();
     newsCardList.clearCardList();
-
+    newsCardList.removeListeners();
     document.querySelector('.results').classList.remove('results_disactive');
     document.querySelector('.loading').classList.remove('loading_disactive');
 
@@ -81,6 +57,8 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
           if (res.articles.length !== 0) {
             document.querySelector('.results').classList.add('results_disactive');
     document.querySelector('.loading').classList.add('loading_disactive');
+    document.querySelector('.loading__nothing').classList.add('loading_disactive');
+
             newsCardList.setArticlesArray(res.articles, keyWord);
             newsCardList.renderResults();
 
@@ -88,6 +66,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
           else if ((res.articles.length === 0)) {
             document.querySelector('.results').classList.remove('results_disactive');
     document.querySelector('.loading__nothing').classList.remove('loading_disactive');
+    document.querySelector('.loading__cards').classList.add('loading_disactive');
 
           }
         })
@@ -95,7 +74,7 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
 
           document.querySelector('.loading').classList.add('loading_disactive');
     document.querySelector('.loading__nothing').classList.remove('loading_disactive');
-
+    document.querySelector('.loading__cards').classList.add('loading_disactive');
         console.error(`Произошла ошибка: "${err.message}"`)
         })
 
@@ -175,7 +154,8 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
       }
       if(event.target.closest('#btn_logout')) {
         header.logout();
-        window.location.href = '../index.html';
+        setTimeout(function(){document.location.href = "index.html";},500);
+        window.location.href = 'index.html';
       }
     }
 

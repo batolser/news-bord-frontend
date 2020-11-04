@@ -1,3 +1,7 @@
+
+import dateFormat from '../utilits/date';
+
+
 export default class NewsCard {
 
 
@@ -32,18 +36,18 @@ export default class NewsCard {
 
 
 
-    card.setAttribute('href', cardData.url || cardData.link);
+    card.setAttribute('href', cardData.url || cardData.link || '../../index.html');
     card.setAttribute('target', '_blank');
-    card.setAttribute('data-id', cardData._id || '');
-    cardImage.setAttribute('src', cardData.urlToImage || cardData.image);
+    card.setAttribute('data-id', cardData._id || undefined);
+    cardImage.setAttribute('src', cardData.urlToImage || cardData.image || '../../images/image-not-found.jpg');
     cardImage.setAttribute('alt', 'Картинка');
     cardKeyword.textContent = cardData.keyword || keyWord;
     cardTag.textContent = 'Войдите, чтобы сохранять статьи';
-    this._date = cardData.publishedAt;
-    cardDate.textContent = (this._date);
-    cardTitle.textContent = cardData.title;
-    cardText.textContent = cardData.description;
-    cardSource.textContent = cardData.source.name || cardData.source;
+    const dateCard = dateFormat.cardDate(new Date(cardData.publishedAt));
+    cardDate.textContent = cardData.date || dateCard || '';
+    cardTitle.textContent = cardData.title || 'Новость';
+    cardText.textContent = cardData.description || cardData.text || 'Текст новости';
+    cardSource.textContent = cardData.source.name || cardData.source || 'Ресурс';
 
 
     card.appendChild(cardImage);

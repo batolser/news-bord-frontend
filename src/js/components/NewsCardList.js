@@ -1,5 +1,15 @@
 import BaseComponent from './BaseComponent';
 
+import NewsCard from './NewsCard';
+const newsCard = new NewsCard();
+
+import constants from '../constants/constants';
+const { CARDS_LIST, KEYWORDS_ALL, KEYWORD_1, KEYWORD_2, KEYWORD_OTHERS } = constants;
+
+import KeyWordsCounter from './KeyWordsCounter';
+
+const keyWordsCounter = new KeyWordsCounter(KEYWORDS_ALL, KEYWORD_1, KEYWORD_2, KEYWORD_OTHERS);
+
 export default class NewsCardList extends BaseComponent {
   constructor(resultsContainer, articlesContainer, cardList,
     showMoreButton, newsCard, api) {
@@ -12,6 +22,7 @@ super();
     this.chunk = 3;
     this.newsCard = newsCard;
     this.api = api;
+    // this.keyWord = keyWord;
     // this.handlers = [
     //   { element: document.querySelector('.card__icon_bookmark'), event: 'click', callback: () => addArticles() }
     // ];
@@ -49,15 +60,47 @@ super();
           this._allFoundedArticles.shift();
         }
       }
+
+      else {
+        // this._allFoundedArticles.forEach(function(item) {
+        //       this.addCard(item, this.keyWord);
+
+        //     });
+
+             this._showMoreButton.classList.add('button__hide');
+              for (let i = 0; i < this.chunk; i++) {
+                this.addCard(this._allFoundedArticles[0], this.keyWord);
+                this._allFoundedArticles.shift();
+              }
+
+
+      }
+
       this._setHandlers([{
         element: this._cardList,
         event: 'click',
         callback: (event) => this.toggleMark(event),
       }]);
+
+      this._setHandlers([{
+        element: this._cardList,
+        event: 'mousemove',
+        callback: (event) => this.addInfo(event),
+      }]);
+
+
+      this._setHandlers([{
+        element: this._cardList,
+        event: 'mouseout',
+        callback: (event) => this.delInfo(event),
+      }]);
+
     }
 
   _showMore() {
+    this.removeListeners();
     this.renderResults();
+
     if (this._allFoundedArticles.length < 3) {
       this._showMoreButton.classList.add('button__hide');
       for (let i = 0; i < this.chunk; i++) {
@@ -80,6 +123,38 @@ super();
 
   }
 
+  addInfo(event) {
+    if (event.target.classList.contains('card__icon_bookmark')) {
+       if(!this.api.isLoggedIn) {
+        event.preventDefault();
+
+        event.target.previousSibling.classList.remove('card__tag_disactive');
+      }
+      }
+      if(event.target.classList.contains('card__icon_trash')) {
+        event.preventDefault();
+
+        event.target.previousSibling.classList.remove('card__tag_disactive');
+        event.target.previousSibling.textContent = 'Убрать из сохранённых';
+      }
+
+  }
+
+  delInfo(event) {
+    if (event.target.classList.contains('card__icon_bookmark')) {
+       if(!this.api.isLoggedIn) {
+        event.preventDefault();
+
+        event.target.previousSibling.classList.add('card__tag_disactive');
+      }
+      }
+      if(event.target.classList.contains('card__icon_trash')) {
+        event.preventDefault();
+
+        event.target.previousSibling.classList.add('card__tag_disactive');
+      }
+
+  }
 
 
   toggleMark(event) {
@@ -102,7 +177,7 @@ super();
         .then((res) => {
 
           cardArticle.setAttribute('data-id', res.data._id);
-          cardArticle.querySelector('.card__icon_bookmark').classList.add('card__icon_ok');
+          cardArticle.querySelector('.card__icon_bookmark').classList.add('card__icon_bookmark_marked');
 
 
         })
@@ -110,14 +185,110 @@ super();
       }
       else if(!this.api.isLoggedIn) {
         event.preventDefault();
+
         event.target.previousSibling.classList.remove('card__tag_disactive');
       }
       }
       if(event.target.classList.contains('card__icon_trash')) {
         event.preventDefault();
-      const articleId = event.target.closest('.card').dataset.id;
+        event.target.previousSibling.classList.remove('card__tag_disactive');
+        event.target.previousSibling.textContent = 'Убрать из сохранённых';
+
+const articleId = event.target.closest('.card').dataset.id;
       this.api.removeArticle(articleId);
-      event.target.closest('.card').querySelector('.card__icon').classList.add('card__icon_ok');
+      this.api.getArticles()
+      .then((res) => {
+
+        if(res.data.length === 0)
+        {
+
+            document.querySelector('.saved__title').textContent = 'У вас нет сохраненных статей';
+            document.querySelector('.saved__description').classList.add('saved__description_inactive');
+            document.querySelector('.results').classList.add('results_disactive');
+
+        }
+        else {
+      const CardListArray = document.querySelectorAll('.card');
+    CardListArray.forEach(function(item) {
+      item.parentNode.removeChild(item);
+    });
+
+        res.data.forEach(function(item) {
+          const element = newsCard.createCard(item, item.keyword);
+          CARDS_LIST.appendChild(element);
+          CARDS_LIST.allCards = res.data;
+        const allArticles = res.data.length;
+function sort (){
+  const keywords = {};
+        CARDS_LIST.allCards.forEach((item) => {
+      if (!keywords[item.keyword]) {
+        keywords[item.keyword] = 1;
+      } else {
+        keywords[item.keyword] += 1;
+      }
+    })
+    return keywords;
+}
+
+
+        const sortedKeywords = keyWordsCounter.sortKeywords(
+          sort ()
+
+          );
+        keyWordsCounter.renderKeyWords(allArticles, sortedKeywords);
+
+        })
+
+
+
+
+        let cards = document.querySelectorAll('.card__icon');
+
+    cards.forEach(function(item) {
+      item.classList.remove('card__icon_bookmark');
+      item.classList.add('card__icon_trash');
+
+
+})
+this._setHandlers([{
+  element: CARDS_LIST,
+  event: 'click',
+  callback: (event) => this.toggleMark(event),
+}]);
+
+this._setHandlers([{
+  element: CARDS_LIST,
+  event: 'mousemove',
+  callback: (event) => this.addInfo(event),
+}]);
+
+
+this._setHandlers([{
+  element: CARDS_LIST,
+  event: 'mouseout',
+  callback: (event) => this.delInfo(event),
+}]);
+
+        // document.querySelector('.cards-list').addEventListener('click', newsCardList.toggleMark.bind(newsCardList));
+      }
+      })
+      // .then((res) => {
+
+      // })
+//       .then((res) => {
+//           let cards = document.querySelectorAll('.card__icon');
+//           // .querySelector('.card__icon').classList.remove('card__icon_bookmark');
+//           // .querySelector('.card__icon').classList.add('card__icon_trash');
+
+//       cards.forEach(function(item) {
+//         item.classList.remove('card__icon_bookmark');
+//         item.classList.add('card__icon_trash');
+// })
+//       }
+//       )
+
+
+      // event.target.closest('.card').querySelector('.card__icon').classList.add('card__icon_ok');
       //перерисовать выведенные карточки
       }
     }

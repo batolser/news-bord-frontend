@@ -1,0 +1,19 @@
+.button.button__popup.button__popup_active {
+
+  background: #2F71E5;
+  box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 24px;
+color: #FFFFFF;
+transition: background .15s linear .15s;
+}
+
+.button.button__popup.button__popup_active:hover {
+  background: #347EFF;
+}
+
+.button.button__popup.button__popup_active:active {
+  background: #2A65CC;
+}

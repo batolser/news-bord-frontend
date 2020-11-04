@@ -1,3 +1,5 @@
+@import url(./_active/button__popup_active.css);
+
 .button.button__popup {
   width: 360px;
   margin: 0 auto;
