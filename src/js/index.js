@@ -12,9 +12,9 @@ import NewsCardList from './components/NewsCardList';
 
 import constants from './constants/constants';
 
+import dateFormat from './utilits/date';
 
-
-const { popupSignin, RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST, SHOWMORE_BUTTON, SEARCH_FORM } = constants;
+const { popupSignin, RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST, SHOWMORE_BUTTON, SEARCH_FORM, chunk } = constants;
 
 
 
@@ -28,7 +28,7 @@ const header = new Header({ color: 'white' });
 
 const newsCard = new NewsCard();
 const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST,
-  SHOWMORE_BUTTON, newsCard, mainApi);
+  SHOWMORE_BUTTON, newsCard, mainApi, chunk);
   newsCardList.setEventListener();
 
 
@@ -52,7 +52,12 @@ const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CA
 
     const keyWord = SEARCH_FORM.children[0].value;
 
-      newsApi.getNews(keyWord)
+    const nowDate = new Date();
+      const from = dateFormat.nthDaysAgoFromDate(nowDate, 7);
+      const to = dateFormat.apiDate(nowDate);
+    
+
+      newsApi.getNews(keyWord, from, to)
         .then((res) => {
           if (res.articles.length !== 0) {
             document.querySelector('.results').classList.add('results_disactive');

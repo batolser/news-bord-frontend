@@ -25,4 +25,7 @@ KEYWORDS_ALL: document.getElementById("keywords__all"),
 KEYWORD_1: document.getElementById("keyword__1"),
 KEYWORD_2: document.getElementById("keyword__2"),
 KEYWORD_OTHERS: document.getElementById("keywords__others"),
+
+
+chunk: 3,
 };

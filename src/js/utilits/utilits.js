@@ -23,7 +23,7 @@ export default {
         })
       })
       .then((res) => {
-          let cards = document.querySelectorAll('.card__icon');
+          const cards = document.querySelectorAll('.card__icon');
           // .querySelector('.card__icon').classList.remove('card__icon_bookmark');
           // .querySelector('.card__icon').classList.add('card__icon_trash');
 

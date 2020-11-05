@@ -7,7 +7,7 @@ import NewsCardList from './components/NewsCardList';
 import KeyWordsCounter from './components/KeyWordsCounter'
 import constants from './constants/constants';
 
-const { popupSignin, RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST, SHOWMORE_BUTTON, KEYWORDS_ALL, KEYWORD_1, KEYWORD_2, KEYWORD_OTHERS } = constants;
+const { popupSignin, RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST, SHOWMORE_BUTTON, KEYWORDS_ALL, KEYWORD_1, KEYWORD_2, KEYWORD_OTHERS, chunk } = constants;
 
 
 
@@ -19,7 +19,7 @@ const header = new Header({ color: 'black' });
 
 const newsCard = new NewsCard();
 const newsCardList = new NewsCardList(RESULTS_CONTAINER, NEWSCARDS_CONTAINER, CARDS_LIST,
-  SHOWMORE_BUTTON, newsCard, mainApi);
+  SHOWMORE_BUTTON, newsCard, mainApi, chunk);
 
 
 
@@ -118,7 +118,7 @@ const keyWordsCounter = new KeyWordsCounter(KEYWORDS_ALL, KEYWORD_1, KEYWORD_2, 
 
       })
       .then((res) => {
-          let cards = document.querySelectorAll('.card__icon');
+          const cards = document.querySelectorAll('.card__icon');
           // .querySelector('.card__icon').classList.remove('card__icon_bookmark');
           // .querySelector('.card__icon').classList.add('card__icon_trash');
 

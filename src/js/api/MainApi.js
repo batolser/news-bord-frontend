@@ -17,6 +17,12 @@ export default class MainApi {
         name,
       }),
     })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(new Error(`Код ошибки: ${res.message}, Сообщение: ${res.status}`));
+    })
     .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
     }
 
@@ -34,12 +40,10 @@ export default class MainApi {
       }),
     })
     .then((res) => {
-      if (res.status !== 200) {
-        throw (err => {
-          console.log(err);
-        })
+      if (res.ok) {
+        return res.json();
       }
-      return res.json();
+      return Promise.reject(new Error(`Код ошибки: ${res.message}, Сообщение: ${res.status}`));
     })
     .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
 
@@ -54,12 +58,10 @@ export default class MainApi {
       },
     })
     .then((res) => {
-      if (res.status !== 200) {
-        throw (err => {
-          console.log(err);
-        })
+      if (res.ok) {
+        return res.json();
       }
-      return res.json();
+      return Promise.reject(new Error(`Код ошибки: ${res.message}, Сообщение: ${res.status}`));
     })
     .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
   }
@@ -88,7 +90,10 @@ export default class MainApi {
       }),
     })
     .then((res) => {
-      return res.json();
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(new Error(`Код ошибки: ${res.message}, Сообщение: ${res.status}`));
     })
     .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
   }
@@ -102,10 +107,19 @@ export default class MainApi {
       }
   })
   .then((res) => {
-    return res.json();
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(new Error(`Код ошибки: ${res.message}, Сообщение: ${res.status}`));
   })
   .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
 }
+
+
+
+
+
+
 
 getArticles() {
   return fetch(`${this._mainURL}/articles`, {
@@ -113,10 +127,15 @@ getArticles() {
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`,
     },
+  }) .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(new Error(`Код ошибки: ${res.message}, Сообщение: ${res.status}`));
   })
-  .then((res) => {
-    return res.json();
-  })
+  // .then((res) => {
+  //   return res.json();
+  // })
   .catch((err) => console.error(`Произошла ошибка: "${err.message}"`));
 }
 

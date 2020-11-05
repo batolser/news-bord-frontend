@@ -12,14 +12,14 @@ const keyWordsCounter = new KeyWordsCounter(KEYWORDS_ALL, KEYWORD_1, KEYWORD_2, 
 
 export default class NewsCardList extends BaseComponent {
   constructor(resultsContainer, articlesContainer, cardList,
-    showMoreButton, newsCard, api) {
+    showMoreButton, newsCard, api, chunk) {
 super();
     this._articlesContainer = articlesContainer;
     this._resultsContainer = resultsContainer;
     this._showMoreButton = showMoreButton;
     this._allFoundedArticles = [];
     this._cardList = cardList;
-    this.chunk = 3;
+    this.chunk = chunk;
     this.newsCard = newsCard;
     this.api = api;
     // this.keyWord = keyWord;
@@ -242,7 +242,7 @@ function sort (){
 
 
 
-        let cards = document.querySelectorAll('.card__icon');
+        const cards = document.querySelectorAll('.card__icon');
 
     cards.forEach(function(item) {
       item.classList.remove('card__icon_bookmark');

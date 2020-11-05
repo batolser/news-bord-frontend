@@ -26,7 +26,7 @@ this.keywords_others = keywords_others;
       keywords = [sortedKeywords[0], sortedKeywords[1], sortedKeywords.length - 2];
     }
     this.keywords_all.textContent = allArticles;
-    
+
     if (keywords.length === 1) {
       this.keyword_1.textContent = keywords[0][0];
       this.keyword_2.textContent = '';
