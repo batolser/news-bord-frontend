@@ -1,0 +1,5 @@
+.menu__button.menu__button_close_light-theme {
+  background-image: url(../../../../../../images/close_black.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+}

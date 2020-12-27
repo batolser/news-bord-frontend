@@ -1,0 +1,10 @@
+@import url(./_cards/loading__title_cards.css);
+
+.loading__title {
+  margin: 0 auto;
+  margin-top: 24px;
+  font-family: 'Roboto Slab', Arial, sans-serif;
+font-size: 26px;
+line-height: 30px;
+color: #1A1B22;
+}

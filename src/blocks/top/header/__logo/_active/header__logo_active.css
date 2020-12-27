@@ -1,0 +1,7 @@
+@import url(./_light-theme/header__logo_active_light-theme.css);
+
+.header__logo.header__logo_active {
+  width: 100%;
+  background: rgba(196, 196, 196, 0.01);
+box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
+}

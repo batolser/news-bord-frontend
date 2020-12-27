@@ -1,0 +1,7 @@
+@import url(./_keyword/saved__description_keyword.css);
+@import url(./_inactive/saved__description_inactive.css);
+
+.saved__description {
+  margin: 0;
+  font-weight: 400;
+}

@@ -1,0 +1,18 @@
+@import url(./_bookmark/card__icon_bookmark.css);
+@import url(./_trash/card__icon_trash.css);
+@import url(./_ok/card__icon_ok.css);
+
+.card__icon {
+  background: #FFFFFF;
+    border-radius: 8px;
+
+    background-repeat: no-repeat;
+    background-position: 50%;
+    cursor: pointer;
+    position: relative;
+    z-index: 99;
+    width: 40px;
+    height: 40px;
+    transition: background-image .5s;
+
+}

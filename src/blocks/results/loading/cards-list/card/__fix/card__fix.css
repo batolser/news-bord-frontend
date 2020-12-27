@@ -1,0 +1,4 @@
+.card__fix {
+  max-height: 228px;
+    overflow: hidden;
+}

@@ -1,0 +1,16 @@
+.nav__login {
+  align-self: center;
+  width: 56px;
+  text-align: start;
+  padding-right: 2px;
+  margin: 0;
+}
+
+
+@media screen and (min-width: 715px) and (max-width: 1023px) {
+
+  .nav__login {
+    width: 44px;
+}
+}
+

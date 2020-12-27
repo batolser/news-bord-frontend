@@ -1,0 +1,57 @@
+@import url(./__singup/popup__singup.css);
+@import url(./__singin/popup__singin.css);
+@import url(./__ok/popup__ok.css);
+@import url(./_is-opened/popup_is-opened.css);
+@import url(./__content/popup__content.css);
+@import url(./__close/popup__close.css);
+@import url(./__title/popup__title.css);
+@import url(./__form/popup__form.css);
+@import url(./__item/popup__item.css);
+@import url(./__field/popup__field.css);
+@import url(./__input/popup__input.css);
+@import url(./__error/popup__error.css);
+@import url(./__option/popup__option.css);
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+  z-index: 101;
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+  .popup {
+  top: 56px;
+  align-items: start;
+  background-color: #fff;
+  border-radius: 16px 16px 0;
+  padding: 0;
+}
+
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+  .button__popup {
+  width: 100%;
+}
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+.popup {
+  top: 56px;
+  align-items: start;
+  background-color: #fff;
+  border-radius: 16px 16px 0;
+  padding: 0;
+}
+
+}

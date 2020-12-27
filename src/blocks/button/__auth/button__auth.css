@@ -1,0 +1,26 @@
+@import url(./_login/button__auth_login.css);
+@import url(./_active/button__auth_active.css);
+@import url(./_light-theme/button__auth_light-theme.css);
+
+.button.button__auth {
+  width: 176px;
+  height: 48px;
+  border: 1px solid #FFFFFF;
+  padding: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.button.button__auth:focus {
+outline: none;
+}
+
+@media screen and (min-width: 715px) and (max-width: 1023px) {
+
+  .button.button__auth {
+  font-size: 16px;
+  height: 40px;
+}
+}

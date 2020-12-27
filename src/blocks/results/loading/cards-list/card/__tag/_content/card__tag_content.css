@@ -1,0 +1,9 @@
+@import url(./_delete/card__tag_content_delete.css);
+
+.card__tag.card__tag_content {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  margin: 0 auto;
+  
+}

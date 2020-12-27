@@ -1,0 +1,17 @@
+.cards-list.cards-list__saved {
+  max-width: 1232px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+
+  .cards-list.cards-list__saved {
+    padding: 24px 0;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+  .cards-list.cards-list__saved {
+  padding: 24px 0;
+}
+}

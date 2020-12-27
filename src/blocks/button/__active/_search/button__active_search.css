@@ -1,0 +1,27 @@
+.button.button__active.button__active_search {
+  width: 168px;
+  align-self: center;
+  margin-right: -1px;
+  outline: none;
+}
+
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+
+  .button.button__active.button__active_search {
+    margin: 0 auto;
+    width: 288px;
+    height: 56px;
+    margin-top: 16px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+  .button.button__active.button__active_search {
+    margin: 0 auto;
+    width: 288px;
+    height: 56px;
+    margin-top: 16px;
+  }
+}

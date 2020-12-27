@@ -1,0 +1,30 @@
+@import url(./__subtitle/saved__subtitle.css);
+@import url(./__title/saved__title.css);
+@import url(./__description/saved__description.css);
+
+
+.saved {
+  padding: 40px 0 56px 104px;
+  color: #1A1B22;
+}
+
+@media screen and (max-width: 1311px) {
+
+  .saved {
+    padding: 24px 0 32px 40px;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+
+  .saved {
+   padding: 64px  16px 32px
+}
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+  .saved {
+   padding: 64px  16px 32px
+}
+}

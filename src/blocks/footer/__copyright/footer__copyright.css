@@ -1,0 +1,34 @@
+.footer__copyright {
+  font-size: 16px;
+  line-height: 22px;
+  color: #B6BCBF;
+  margin: 32px 0 26px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 1311px) {
+
+  .footer__copyright {
+    margin: 24px 0 18px;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+.footer__copyright {
+  margin: 40px 0 22px;
+}
+}
+
+
+@media screen and (min-width: 375px) and (max-width: 650px) {
+  .footer__copyright {
+    text-align: center;
+}
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+.footer__copyright {
+  margin: 40px 0 22px;
+}
+}

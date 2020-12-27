@@ -1,0 +1,9 @@
+
+.card__icon.card__icon_trash {
+  background-image: url(../../../../../../../images/trash.svg);
+  transition: background-image .15s linear .15s;
+}
+
+.card__icon.card__icon_trash:hover {
+  background-image: url(../../../../../../../images/trash_hover.svg);
+}

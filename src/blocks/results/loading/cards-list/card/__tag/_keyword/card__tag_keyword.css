@@ -1,0 +1,9 @@
+
+.card__tag_keyword {
+  display: flex;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  margin-right: 0;
+  width: auto;
+}

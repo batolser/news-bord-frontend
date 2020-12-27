@@ -1,0 +1,25 @@
+.saved__subtitle {
+  margin: 0;
+  color: rgba(26, 27, 34, 0.5);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 376px) and (max-width: 714px) {
+
+
+  .header__login_light-theme {
+   margin-bottom: 0;
+  }
+
+ .saved__subtitle {
+   font-size: 12px;
+ }
+}
+
+@media screen and (min-width: 320px) and (max-width: 375px) {
+
+ .saved__subtitle {
+   font-size: 12px;
+ }
+}

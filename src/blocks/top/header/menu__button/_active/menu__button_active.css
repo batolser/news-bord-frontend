@@ -1,0 +1,4 @@
+.menu__button.menu__button_active {
+  position: absolute;
+  right: 0;
+}

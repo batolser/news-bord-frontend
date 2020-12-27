@@ -1,0 +1,15 @@
+@import url(./__auth/button__auth.css);
+@import url(./__active/button__active.css);
+@import url(./__more/button__more.css);
+@import url(./__hide/button__hide.css);
+@import url(./__popup/button__popup.css);
+
+.button {
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 100px;
+  color: #FFFFFF;
+  height: 64px;
+  padding: 0;
+  /* padding: 11.88px 0 15.12px; */
+}
